@@ -1,7 +1,4 @@
 library eggnstone_google_analytics;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'package:eggnstone_google_analytics/google/GoogleAnalyticsNonWebService.dart' if (dart.library.html) 'services/google_analytics/GoogleAnalyticsWebService.dart';
+export 'package:eggnstone_google_analytics/google/IGoogleAnalyticsService.dart';
