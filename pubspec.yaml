@@ -1,31 +1,32 @@
 name: eggnstone_google_analytics
 copyright: 2020 Mark Eggenstein
-description: Google analytics wrapper
+description: Google Analytics wrapper
 homepage: https://eggnstone.dev
 version: 0.0.1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0 <2.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   # Flutter tools
-  eggnstone_flutter: ^0.2.0
-  #eggnstone_flutter:
-  #  path: ..\eggnstone_flutter
+  #eggnstone_flutter: ^0.2.0
+  eggnstone_flutter:
+    path: ..\eggnstone_flutter
 
   # Firebase Analytics (Web)
   firebase: ^7.3.0
   # Firebase Analytics (NonWeb)
-  firebase_analytics: ^5.0.14
+  firebase_analytics: ^6.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   # Mocking
-  mockito: ^4.1.1
+  mockito: ^4.1.2
 
 flutter:

@@ -1,4 +1,4 @@
-import 'package:eggnstone_flutter/services/analytics/IAnalyticsService.dart';
+import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 
 abstract class IGoogleAnalyticsService extends IAnalyticsService
 {

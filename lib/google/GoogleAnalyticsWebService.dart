@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:eggnstone_flutter/services/logger/LoggerMixin.dart';
+import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/google/IGoogleAnalyticsService.dart';
 import 'package:firebase/firebase.dart' as FirebaseWeb;
 
