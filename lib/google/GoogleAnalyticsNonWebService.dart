@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/google/IGoogleAnalyticsService.dart';
+
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 /// Requires [LoggerService]
@@ -17,13 +19,16 @@ class GoogleAnalyticsService
 
     final FirebaseAnalytics _firebaseAnalytics;
 
+    late LoggerService _logger;
+
     bool _isEnabled;
-    String _currentScreen;
+    String _currentScreen = "";
 
     GoogleAnalyticsService._internal(this._firebaseAnalytics, this._isEnabled)
     {
         assert(logger != null, 'Unable to find via GetIt: Logger');
         //logger.logDebug('AnalyticsService for NonWeb created.');
+        _logger = logger!;
     }
 
     /// Requires [LoggerService]
@@ -57,7 +62,7 @@ class GoogleAnalyticsService
     @override
     set currentScreen(String newValue)
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setCurrentScreen: ' + newValue);
+        _logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setCurrentScreen: ' + newValue);
 
         _currentScreen = newValue;
 
@@ -66,12 +71,10 @@ class GoogleAnalyticsService
     }
 
     @override
-    Future track(String name, [Map<String, dynamic> params])
+    Future track(String name, [Map<String, dynamic>? params])
     async
     {
-        assert(name != null);
-
-        if (name.length == 0)
+        if (name.isEmpty)
             return;
 
         // Check limits (https://support.google.com/firebase/answer/9237506?hl=en)
@@ -79,14 +82,14 @@ class GoogleAnalyticsService
         if (name.length > GoogleAnalyticsService.MAX_EVENT_NAME_LENGTH)
             name = name.substring(0, GoogleAnalyticsService.MAX_EVENT_NAME_LENGTH);
 
-        Map<String, dynamic> safeParams;
+        Map<String, dynamic>? safeParams;
         if (params != null)
         {
             safeParams = {};
 
             for (String key in params.keys)
             {
-                Object value = params[key];
+                Object? value = params[key];
                 if (value == null)
                     continue;
 
@@ -112,7 +115,7 @@ class GoogleAnalyticsService
             for (String key in safeParams.keys)
                 s += ' $key=${safeParams[key]}';
 
-        logger.logInfo(s);
+        _logger.logInfo(s);
 
         if (_isEnabled)
             _firebaseAnalytics.logEvent(name: name, parameters: safeParams);
@@ -131,10 +134,10 @@ class GoogleAnalyticsService
     => track(name, {'Action': action, 'Value': value});
 
     @override
-    Future trackWarning(String message, [Map<String, dynamic> params])
+    Future trackWarning(String message, [Map<String, dynamic>? params])
     async
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarning: $message / $params');
+        _logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarning: $message / $params');
 
         if (params == null)
             params = {};
@@ -146,10 +149,10 @@ class GoogleAnalyticsService
     }
 
     @override
-    Future trackError(String message, [Map<String, dynamic> params])
+    Future trackError(String message, [Map<String, dynamic>? params])
     async
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackError: $message / $params');
+        _logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackError: $message / $params');
 
         if (params == null)
             params = {};
@@ -164,7 +167,7 @@ class GoogleAnalyticsService
     Future trackWarningWithException(String source, dynamic e, dynamic stackTrace)
     async
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarningWithException: $source / $e / $stackTrace');
+        _logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarningWithException: $source / $e / $stackTrace');
 
         if (_isEnabled)
             await track('Warning', {'Message': e.toString(), 'StackTrace': stackTrace?.toString()});
@@ -174,7 +177,7 @@ class GoogleAnalyticsService
     Future trackErrorWithException(String source, dynamic e, dynamic stackTrace)
     async
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackErrorWithException: $source / $e / $stackTrace');
+        _logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackErrorWithException: $source / $e / $stackTrace');
 
         if (_isEnabled)
             await track('Error', {'Message': e.toString(), 'StackTrace': stackTrace?.toString()});
@@ -183,7 +186,7 @@ class GoogleAnalyticsService
     @override
     void setUserProperty(String name, String value, {bool force = false})
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: name=$name value=$value force=$force');
+        _logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: name=$name value=$value force=$force');
 
         if (_isEnabled || force)
             _firebaseAnalytics.setUserProperty(name: name, value: value);
@@ -192,7 +195,7 @@ class GoogleAnalyticsService
     @override
     void setUserId(String value)
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $value');
+        _logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $value');
 
         if (_isEnabled)
             _firebaseAnalytics.setUserId(value);
