@@ -48,7 +48,7 @@ void testLog()
         {
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track('Test');
-            verify(logger.logInfo(argThat(equals('Analytics: Test'))));
+            verify(logger.logInfo(argThat(equals('GoogleAnalytics: Test'))));
             verifyNever(logger.logDebug(any));
             verifyNever(logger.logWarning(any));
             verifyNever(logger.logError(any));
@@ -59,7 +59,7 @@ void testLog()
         {
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track(TEXT_40);
-            verify(logger.logInfo(argThat(equals('Analytics: ' + TEXT_40))));
+            verify(logger.logInfo(argThat(equals('GoogleAnalytics: ' + TEXT_40))));
             verifyNever(logger.logDebug(any));
             verifyNever(logger.logWarning(any));
             verifyNever(logger.logError(any));
@@ -71,12 +71,18 @@ void testLog()
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track(TEXT_41);
 
+            // Behavior changed so that name just gets shortened
+
+            /*
             verifyInOrder([
                 logger.logError('##################################################'),
                 logger.logError('# Error: Event name "Test_41_chars_456789012345678901234567890" is too long! Is=41 Max=40'),
             ]);
-
             verifyNever(logger.logInfo(any));
+            */
+
+            verify(logger.logInfo(argThat(equals('GoogleAnalytics: ' + TEXT_41.substring(0, 40)))));
+
             verifyNever(logger.logDebug(any));
             verifyNever(logger.logWarning(any));
         });
