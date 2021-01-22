@@ -1,7 +1,7 @@
 name: eggnstone_google_analytics
 copyright: 2020-2021 Mark Eggenstein
 description: Google Analytics wrapper. Allows to report via Firebase.
-homepage: https://eggnstone.dev
+homepage: https://github.com/eggnstone/eggnstone_google_analytics
 version: 0.3.2
 
 # Default package versions on 22.01.2021
