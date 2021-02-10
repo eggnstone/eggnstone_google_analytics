@@ -1,11 +1,11 @@
 import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/eggnstone_google_analytics.dart';
-// ignore: import_of_legacy_library_into_null_safe
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_test/flutter_test.dart';
-// ignore: import_of_legacy_library_into_null_safe
+
 import 'package:get_it/get_it.dart';
-// ignore: import_of_legacy_library_into_null_safe
+
 import 'package:mockito/mockito.dart';
 
 const String TEXT_40 = 'Test_40_chars_45678901234567890123456789';
