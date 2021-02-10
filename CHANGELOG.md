@@ -1,3 +1,7 @@
+## [0.4.0-nullsafety.0] - 10.02.2021
+
+* Preparing sound null safety.
+
 ## [0.1.0-nullsafety.0] - 23.11.2020
 
 * Preparing sound null safety.
