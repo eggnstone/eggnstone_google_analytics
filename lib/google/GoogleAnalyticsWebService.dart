@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:eggnstone_flutter/eggnstone_flutter.dart';
-import 'package:eggnstone_google_analytics/google/IGoogleAnalyticsService.dart';import 'package:firebase/firebase.dart' as FirebaseWeb;
+import 'package:eggnstone_google_analytics/google/IGoogleAnalyticsService.dart';
+import 'package:firebase/firebase.dart' as FirebaseWeb;
 
 /// Requires [LoggerService]
 class GoogleAnalyticsService
@@ -17,7 +18,7 @@ class GoogleAnalyticsService
     final FirebaseWeb.Analytics _firebaseAnalytics;
 
     bool _isEnabled;
-    String _currentScreen = "";
+    String _currentScreen = '';
 
     GoogleAnalyticsService._internal(this._firebaseAnalytics, this._isEnabled);
 

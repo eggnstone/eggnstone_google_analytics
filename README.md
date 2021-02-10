@@ -1,6 +1,6 @@
 # eggnstone_google_analytics
 
-Google Analytics wrapper. Allows to report via Firebase.
+A wrapper for Google Analytics. Allows to report via Firebase.
 
 # For Google Analytics to work
  

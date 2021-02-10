@@ -1,0 +1,13 @@
+# Check out https://docs.codemagic.io/yaml/yaml/ for more information
+
+workflows:
+    flutter-package:
+        name: Default Workflow
+        environment:
+            flutter: beta
+        triggering:
+            events:
+                - push
+        scripts:
+            - flutter packages pub get
+            - flutter test
