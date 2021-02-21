@@ -18,8 +18,13 @@ dependencies:
   #eggnstone_flutter:
   #  path: ..\eggnstone_flutter
 
+  # Firebase Analytics (Web)
+  # firebase_analytics 7.x.x does not work with firebase 8.x.x
+  firebase: ^7.3.3
   # Firebase Analytics (NonWeb)
   firebase_analytics: ^7.0.1
+  # Service locator (included via eggnstone_flutter but "flutter pub publish" warns if not included here)
+  get_it: ^6.0.0
 
 dev_dependencies:
   flutter_test:
