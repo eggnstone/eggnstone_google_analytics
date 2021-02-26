@@ -31,10 +31,10 @@ class GoogleAnalyticsService
     => GoogleAnalyticsService.createMockable(FirebaseAnalyticsWeb(), startEnabled);
 
     /// Requires [LoggerService]
-    static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalyticsWeb firebaseWebAnalytics, bool startEnabled)
+    static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalyticsWeb firebaseAnalytics, bool startEnabled)
     async
     {
-        var instance = GoogleAnalyticsService._internal(firebaseWebAnalytics, startEnabled);
+        var instance = GoogleAnalyticsService._internal(firebaseAnalytics, startEnabled);
         instance._firebaseAnalytics.setAnalyticsCollectionEnabled(startEnabled);
         return instance;
     }
@@ -62,7 +62,7 @@ class GoogleAnalyticsService
         _currentScreen = newValue;
 
         if (_isEnabled)
-            _firebaseAnalytics.setCurrentScreen(screenName: newValue);
+            _firebaseAnalytics.setCurrentScreen(screenName: newValue, screenClassOverride: newValue);
     }
 
     @override
@@ -186,13 +186,7 @@ class GoogleAnalyticsService
         logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: name=$name value=$value force=$force');
 
         if (_isEnabled || force)
-        {
-            //_firebaseAnalytics.setUserProperty(name: name, value: value);
-            //FirebaseWeb.CustomParams myCustomParams = MyCustomParams(name, value);
-            //_firebaseAnalytics.setUserProperties(myCustomParams);
-            //_firebaseAnalytics.setUserProperties({name:value} as  FirebaseWeb.CustomParams);
-            logger.logWarning('setUserProperty() is not available for Web.');
-        }
+            _firebaseAnalytics.setUserProperty(name: name, value: value);
     }
 
     @override

@@ -1,3 +1,7 @@
+## [0.3.7] - 26.02.2021
+
+* Removed dependency on Firebase base package.
+
 ## [0.3.6] - 26.02.2021
 
 * Updated dependencies.
