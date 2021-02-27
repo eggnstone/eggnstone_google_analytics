@@ -1,3 +1,7 @@
+## [0.4.0] - 27.02.2021
+
+* Released with sound null safety.
+
 ## [0.4.0-nullsafety.0] - 10.02.2021
 
 * Preparing sound null safety.
