@@ -44,3 +44,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Should be kept private
+/android/app/google-services.json
+/ios/Runner/GoogleService-Info.plist
