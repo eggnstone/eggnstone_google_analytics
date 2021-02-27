@@ -23,10 +23,12 @@ class GoogleAnalyticsService
     GoogleAnalyticsService._internal(this._firebaseAnalytics, this._isEnabled);
 
     /// Requires [LoggerService]
+    /// @param startEnabled The state the service should start with.
     static Future<IGoogleAnalyticsService> create(bool startEnabled)
     => GoogleAnalyticsService.createMockable(FirebaseAnalyticsWeb(), startEnabled);
 
     /// Requires [LoggerService]
+    /// For testing purposes only.
     static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalyticsWeb firebaseAnalytics, bool startEnabled)
     async
     {
@@ -35,10 +37,12 @@ class GoogleAnalyticsService
         return instance;
     }
 
+    /// The state of the service (if it reports to Google Analytics or not).
     @override
     bool get isEnabled
     => _isEnabled;
 
+    /// The state of the service (if it reports to Google Analytics or not).
     @override
     set isEnabled(bool newValue)
     {
@@ -46,10 +50,12 @@ class GoogleAnalyticsService
         _firebaseAnalytics.setAnalyticsCollectionEnabled(newValue);
     }
 
+    /// The current screen.
     @override
     String get currentScreen
     => _currentScreen;
 
+    /// The current screen.
     @override
     set currentScreen(String newValue)
     {
@@ -61,6 +67,9 @@ class GoogleAnalyticsService
             _firebaseAnalytics.setCurrentScreen(screenName: newValue, screenClassOverride: newValue);
     }
 
+    /// Track an event.
+    /// @param name The name of the event.
+    /// @param params The optional parameters.
     @override
     Future track(String name, [Map<String, dynamic>? params])
     async
@@ -112,18 +121,31 @@ class GoogleAnalyticsService
             _firebaseAnalytics.logEvent(name: name, parameters: safeParams);
     }
 
+    /// Track an action event.
+    /// @param name The name of the event.
+    /// @param action The name of the action.
     @override
     void trackAction(String name, String action)
     => track(name, {'Action': action});
 
+    /// Track a value event.
+    /// @param name The name of the event.
+    /// @param value The name of the value.
     @override
     void trackValue(String name, Object value)
     => track(name, {'Value': value});
 
+    /// Track an action-and-value event.
+    /// @param name The name of the event.
+    /// @param action The name of the action.
+    /// @param value The name of the value.
     @override
     void trackActionAndValue(String name, String action, Object value)
     => track(name, {'Action': action, 'Value': value});
 
+    /// Track a warning.
+    /// @param message The warning message.
+    /// @param params The optional parameters.
     @override
     Future trackWarning(String message, [Map<String, dynamic>? params])
     async
@@ -139,6 +161,9 @@ class GoogleAnalyticsService
             await track('Warning', params);
     }
 
+    /// Track an error.
+    /// @param message The error message.
+    /// @param params The optional parameters.
     @override
     Future trackError(String message, [Map<String, dynamic>? params])
     async
@@ -154,6 +179,9 @@ class GoogleAnalyticsService
             await track('Error', params);
     }
 
+    /// Track a warning with an exception.
+    /// @param source The source of the warning.
+    /// @param stackTrace The stack trace.
     @override
     Future trackWarningWithException(String source, dynamic e, dynamic stackTrace)
     async
@@ -164,6 +192,9 @@ class GoogleAnalyticsService
             await track('Warning', {'Message': e.toString(), 'StackTrace': stackTrace?.toString()});
     }
 
+    /// Track an error with an exception.
+    /// @param source The source of the error.
+    /// @param stackTrace The stack trace.
     @override
     Future trackErrorWithException(String source, dynamic e, dynamic stackTrace)
     async

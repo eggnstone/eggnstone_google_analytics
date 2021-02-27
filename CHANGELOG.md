@@ -1,3 +1,7 @@
+## [0.4.2] - 27.02.2021
+
+* Improved API documentation.
+
 ## [0.4.1] - 27.02.2021
 
 * Added example.
