@@ -1,3 +1,7 @@
+## [0.4.1] - 27.02.2021
+
+* Added example.
+
 ## [0.4.0] - 27.02.2021
 
 * Released with sound null safety.
