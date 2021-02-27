@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/google/IGoogleAnalyticsService.dart';
-import 'package:firebase/firebase.dart' as FirebaseWeb;
+import 'package:firebase_analytics_web/firebase_analytics_web.dart';
 
 /// Requires [LoggerService]
 class GoogleAnalyticsService
@@ -15,7 +15,7 @@ class GoogleAnalyticsService
     static const int MAX_PARAM_NAME_LENGTH = 40;
     static const int MAX_PARAM_VALUE_LENGTH = 100;
 
-    final FirebaseWeb.Analytics _firebaseAnalytics;
+    final FirebaseAnalyticsWeb _firebaseAnalytics;
 
     bool _isEnabled;
     String _currentScreen = '';
@@ -24,13 +24,13 @@ class GoogleAnalyticsService
 
     /// Requires [LoggerService]
     static Future<IGoogleAnalyticsService> create(bool startEnabled)
-    => GoogleAnalyticsService.createMockable(FirebaseWeb.analytics(), startEnabled);
+    => GoogleAnalyticsService.createMockable(FirebaseAnalyticsWeb(), startEnabled);
 
     /// Requires [LoggerService]
-    static Future<IGoogleAnalyticsService> createMockable(FirebaseWeb.Analytics firebaseWebAnalytics, bool startEnabled)
+    static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalyticsWeb firebaseAnalytics, bool startEnabled)
     async
     {
-        var instance = GoogleAnalyticsService._internal(firebaseWebAnalytics, startEnabled);
+        var instance = GoogleAnalyticsService._internal(firebaseAnalytics, startEnabled);
         instance._firebaseAnalytics.setAnalyticsCollectionEnabled(startEnabled);
         return instance;
     }
@@ -58,7 +58,7 @@ class GoogleAnalyticsService
         _currentScreen = newValue;
 
         if (_isEnabled)
-            _firebaseAnalytics.setCurrentScreen(newValue);
+            _firebaseAnalytics.setCurrentScreen(screenName: newValue, screenClassOverride: newValue);
     }
 
     @override
@@ -109,7 +109,7 @@ class GoogleAnalyticsService
         logger.logInfo(s);
 
         if (_isEnabled)
-            _firebaseAnalytics.logEvent(name, safeParams);
+            _firebaseAnalytics.logEvent(name: name, parameters: safeParams);
     }
 
     @override
@@ -180,13 +180,7 @@ class GoogleAnalyticsService
         logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: name=$name value=$value force=$force');
 
         if (_isEnabled || force)
-        {
-            //_firebaseAnalytics.setUserProperty(name: name, value: value);
-            //FirebaseWeb.CustomParams myCustomParams = MyCustomParams(name, value);
-            //_firebaseAnalytics.setUserProperties(myCustomParams);
-            //_firebaseAnalytics.setUserProperties({name:value} as  FirebaseWeb.CustomParams);
-            logger.logWarning('setUserProperty() is not available for Web.');
-        }
+            _firebaseAnalytics.setUserProperty(name: name, value: value);
     }
 
     @override
