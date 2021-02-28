@@ -24,7 +24,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  eggnstone_google_analytics: ^0.4.0
+  eggnstone_google_analytics:
+    path: ..
 
 dev_dependencies:
   flutter_test:

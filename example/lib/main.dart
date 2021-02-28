@@ -80,21 +80,13 @@ class _HomePageState extends State<HomePage>
     Widget build(BuildContext context)
     {
         return Scaffold(
-            appBar: AppBar(
-                title: Text('eggnstone_google_analytics Demo')
-            ),
+            appBar: AppBar(title: Text('eggnstone_google_analytics Demo')),
             body: Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                         Text('You have pushed the button this many times:'),
-                        Text(
-                            '$_counter',
-                            style: Theme
-                                .of(context)
-                                .textTheme
-                                .headline4
-                        )
+                        Text('$_counter')
                     ]
                 )
             ),
