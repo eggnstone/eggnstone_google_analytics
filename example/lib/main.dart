@@ -3,7 +3,6 @@ import 'package:eggnstone_google_analytics/eggnstone_google_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:pedantic/pedantic.dart';
 
 void main()
 async
@@ -35,7 +34,7 @@ async
 
     final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.create(useAnalytics);
     GetIt.instance.registerSingleton<IAnalyticsService>(analytics);
-    unawaited(analytics.track('AppStart', <String, dynamic>{'Version': '0.0.1'}));
+    analytics.track('AppStart', <String, dynamic>{'Version': '0.0.1'});
 
     runApp(App());
 }
@@ -73,7 +72,7 @@ class _HomePageState extends State<HomePage>
             _counter++;
         });
 
-        unawaited(analytics.track('ButtonPush', <String, dynamic>{'Counter': _counter}));
+        analytics.track('ButtonPush', <String, dynamic>{'Counter': _counter});
     }
 
     @override

@@ -1,3 +1,7 @@
+## [1.0.2] - 02.03.2021
+
+* Removed pointless futures from analytics tracking.
+
 ## [1.0.1] - 02.03.2021
 
 * Made stacktrace in analytics optional. 

@@ -62,7 +62,7 @@ class GoogleAnalyticsService
     }
 
     @override
-    Future track(String name, [Map<String, dynamic>? params])
+    void track(String name, [Map<String, dynamic>? params])
     async
     {
         if (name.isEmpty)
@@ -136,11 +136,11 @@ class GoogleAnalyticsService
         params['Message'] = message;
 
         if (_isEnabled)
-            await track('Warning', params);
+            track('Warning', params);
     }
 
     @override
-    Future trackError(String message, [Map<String, dynamic>? params])
+    void trackError(String message, [Map<String, dynamic>? params])
     async
     {
         logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackError: $message / $params');
@@ -151,11 +151,11 @@ class GoogleAnalyticsService
         params['Message'] = message;
 
         if (_isEnabled)
-            await track('Error', params);
+            track('Error', params);
     }
 
     @override
-    Future trackWarningWithException(String source, dynamic e, [dynamic stackTrace])
+    void trackWarningWithException(String source, dynamic e, [dynamic stackTrace])
     async
     {
         logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarningWithException: $source / $e / $stackTrace');
@@ -166,12 +166,12 @@ class GoogleAnalyticsService
             if (stackTrace != null)
                 params[ 'StackTrace'] = stackTrace.toString();
 
-            await track('Warning', params);
+            track('Warning', params);
         }
     }
 
     @override
-    Future trackErrorWithException(String source, dynamic e, [dynamic stackTrace])
+    void trackErrorWithException(String source, dynamic e, [dynamic stackTrace])
     async
     {
         logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackErrorWithException: $source / $e / $stackTrace');
@@ -182,7 +182,7 @@ class GoogleAnalyticsService
             if (stackTrace != null)
                 params[ 'StackTrace'] = stackTrace.toString();
 
-            await track('Error', params);
+            track('Error', params);
         }
     }
 
