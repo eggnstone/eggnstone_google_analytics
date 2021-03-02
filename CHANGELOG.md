@@ -1,3 +1,7 @@
+## [1.0.0] - 02.03.2021
+
+* Made stacktrace in analytics optional. 
+
 ## [0.4.2] - 27.02.2021
 
 * Improved API documentation.

@@ -183,26 +183,38 @@ class GoogleAnalyticsService
     /// @param source The source of the warning.
     /// @param stackTrace The stack trace.
     @override
-    Future trackWarningWithException(String source, dynamic e, dynamic stackTrace)
+    Future trackWarningWithException(String source, dynamic e, dynamic? stackTrace)
     async
     {
         logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarningWithException: $source / $e / $stackTrace');
 
         if (_isEnabled)
-            await track('Warning', {'Message': e.toString(), 'StackTrace': stackTrace?.toString()});
+        {
+            Map<String, dynamic>? params = {'Message': e.toString()};
+            if (stackTrace != null)
+                params[ 'StackTrace'] = stackTrace.toString();
+
+            await track('Warning', params);
+        }
     }
 
     /// Track an error with an exception.
     /// @param source The source of the error.
     /// @param stackTrace The stack trace.
     @override
-    Future trackErrorWithException(String source, dynamic e, dynamic stackTrace)
+    Future trackErrorWithException(String source, dynamic e, dynamic? stackTrace)
     async
     {
         logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackErrorWithException: $source / $e / $stackTrace');
 
         if (_isEnabled)
-            await track('Error', {'Message': e.toString(), 'StackTrace': stackTrace?.toString()});
+        {
+            Map<String, dynamic>? params = {'Message': e.toString()};
+            if (stackTrace != null)
+                params[ 'StackTrace'] = stackTrace.toString();
+
+            await track('Error', params);
+        }
     }
 
     @override
