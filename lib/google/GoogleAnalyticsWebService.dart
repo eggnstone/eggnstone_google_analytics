@@ -218,20 +218,20 @@ class GoogleAnalyticsService
     }
 
     @override
-    void setUserProperty(String name, String value, {bool force = false})
-    {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: name=$name value=$value force=$force');
-
-        if (_isEnabled || force)
-            _firebaseAnalytics.setUserProperty(name: name, value: value);
-    }
-
-    @override
     void setUserId(String value)
     {
         logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $value');
 
         if (_isEnabled)
             _firebaseAnalytics.setUserId(value);
+    }
+
+    @override
+    void setUserProperty(String name, String value, {bool force = false})
+    {
+        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: name=$name value=$value force=$force');
+
+        if (_isEnabled || force)
+            _firebaseAnalytics.setUserProperty(name: name, value: value);
     }
 }

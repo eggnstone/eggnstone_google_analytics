@@ -1,3 +1,7 @@
+## [1.1.0] - 04.03.2021
+
+* Supporting/requiring Dart 2.12.0 now.
+
 ## [1.0.2] - 02.03.2021
 
 * Removed pointless futures from analytics tracking.
