@@ -29,8 +29,7 @@ async
         return;
     }
 
-    final LoggerService logger = LoggerService(useLogger);
-    GetIt.instance.registerSingleton<LoggerService>(logger);
+    isLoggerEnabled = useLogger;
 
     final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.create(useAnalytics);
     GetIt.instance.registerSingleton<IAnalyticsService>(analytics);

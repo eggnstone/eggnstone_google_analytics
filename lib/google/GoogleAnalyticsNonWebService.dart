@@ -4,9 +4,7 @@ import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/google/IGoogleAnalyticsService.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-/// Requires [LoggerService]
 class GoogleAnalyticsService
-    with LoggerMixin
     implements IGoogleAnalyticsService
 {
     static const String EVENT_NAME__TUTORIAL_BEGIN = 'tutorial_begin';
@@ -22,11 +20,9 @@ class GoogleAnalyticsService
 
     GoogleAnalyticsService._internal(this._firebaseAnalytics, this._isEnabled);
 
-    /// Requires [LoggerService]
     static Future<IGoogleAnalyticsService> create(bool startEnabled)
     => GoogleAnalyticsService.createMockable(FirebaseAnalytics(), startEnabled);
 
-    /// Requires [LoggerService]
     static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalytics firebaseAnalytics, bool startEnabled)
     async
     {
@@ -53,7 +49,7 @@ class GoogleAnalyticsService
     @override
     set currentScreen(String newValue)
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setCurrentScreen: ' + newValue);
+        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setCurrentScreen: ' + newValue);
 
         _currentScreen = newValue;
 
@@ -106,7 +102,7 @@ class GoogleAnalyticsService
             for (String key in safeParams.keys)
                 s += ' $key=${safeParams[key]}';
 
-        logger.logInfo(s);
+        logInfo(s);
 
         if (_isEnabled)
             _firebaseAnalytics.logEvent(name: name, parameters: safeParams);
@@ -128,7 +124,7 @@ class GoogleAnalyticsService
     Future trackWarning(String message, [Map<String, dynamic>? params])
     async
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarning: $message / $params');
+        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarning: $message / $params');
 
         if (params == null)
             params = {};
@@ -143,7 +139,7 @@ class GoogleAnalyticsService
     void trackError(String message, [Map<String, dynamic>? params])
     async
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackError: $message / $params');
+        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackError: $message / $params');
 
         if (params == null)
             params = {};
@@ -158,7 +154,7 @@ class GoogleAnalyticsService
     void trackWarningWithException(String source, dynamic e, [dynamic stackTrace])
     async
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarningWithException: $source / $e / $stackTrace');
+        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarningWithException: $source / $e / $stackTrace');
 
         if (_isEnabled)
         {
@@ -174,7 +170,7 @@ class GoogleAnalyticsService
     void trackErrorWithException(String source, dynamic e, [dynamic stackTrace])
     async
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackErrorWithException: $source / $e / $stackTrace');
+        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackErrorWithException: $source / $e / $stackTrace');
 
         if (_isEnabled)
         {
@@ -189,7 +185,7 @@ class GoogleAnalyticsService
     @override
     void setUserId(String value)
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $value');
+        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $value');
 
         if (_isEnabled)
             _firebaseAnalytics.setUserId(value);
@@ -198,7 +194,7 @@ class GoogleAnalyticsService
     @override
     void setUserProperty(String name, String value, {bool force = false})
     {
-        logger.logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: name=$name value=$value force=$force');
+        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: name=$name value=$value force=$force');
 
         if (_isEnabled || force)
             _firebaseAnalytics.setUserProperty(name: name, value: value);

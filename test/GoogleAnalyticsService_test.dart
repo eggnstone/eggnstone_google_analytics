@@ -1,18 +1,12 @@
-import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/eggnstone_google_analytics.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
 const String TEXT_40 = 'Test_40_chars_45678901234567890123456789';
 const String TEXT_41 = 'Test_41_chars_456789012345678901234567890';
 const String TEXT_100 = 'Test_100_chars_5678901234567890123456789012345678901234567890123456789012345678901234567890123456789';
 const String TEXT_101 = 'Test_101_chars_56789012345678901234567890123456789012345678901234567890123456789012345678901234567891';
-
-class MockLoggerService extends Mock
-    implements LoggerService
-{}
 
 class MockFirebaseAnalytics extends Mock
     implements FirebaseAnalytics
@@ -26,10 +20,6 @@ void main()
 
 void testLog()
 {
-    LoggerService logger = MockLoggerService();
-    GetIt.instance.registerSingleton<LoggerService>(logger);
-    //GetIt.instance.registerSingleton<LoggerService>(LoggerService(true));
-
     group('track with name only', ()
     {
         test('Only with name, empty name', ()
@@ -37,10 +27,10 @@ void testLog()
         {
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track('');
-            assert(false, 'fix mockito'); // verifyNever(logger.logInfo(any));
-            assert(false, 'fix mockito'); // verifyNever(logger.logDebug(any));
-            assert(false, 'fix mockito'); // verifyNever(logger.logWarning(any));
-            assert(false, 'fix mockito'); // verifyNever(logger.logError(any));
+            assert(false, 'fix mockito'); // verifyNever(logInfo(any));
+            assert(false, 'fix mockito'); // verifyNever(logDebug(any));
+            assert(false, 'fix mockito'); // verifyNever(logWarning(any));
+            assert(false, 'fix mockito'); // verifyNever(logError(any));
         });
 
         test('Only with name, length ok', ()
@@ -48,10 +38,10 @@ void testLog()
         {
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track('Test');
-            assert(false, 'fix mockito'); // verify(logger.logInfo(argThat(equals('GoogleAnalytics: Test'))));
-            assert(false, 'fix mockito'); // verifyNever(logger.logDebug(any));
-            assert(false, 'fix mockito'); // verifyNever(logger.logWarning(any));
-            assert(false, 'fix mockito'); // verifyNever(logger.logError(any));
+            assert(false, 'fix mockito'); // verify(logInfo(argThat(equals('GoogleAnalytics: Test'))));
+            assert(false, 'fix mockito'); // verifyNever(logDebug(any));
+            assert(false, 'fix mockito'); // verifyNever(logWarning(any));
+            assert(false, 'fix mockito'); // verifyNever(logError(any));
         });
 
         test('Only with name, length barely ok', ()
@@ -59,10 +49,10 @@ void testLog()
         {
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track(TEXT_40);
-            assert(false, 'fix mockito'); // verify(logger.logInfo(argThat(equals('GoogleAnalytics: ' + TEXT_40))));
-            assert(false, 'fix mockito'); // verifyNever(logger.logDebug(any));
-            assert(false, 'fix mockito'); // verifyNever(logger.logWarning(any));
-            assert(false, 'fix mockito'); // verifyNever(logger.logError(any));
+            assert(false, 'fix mockito'); // verify(logInfo(argThat(equals('GoogleAnalytics: ' + TEXT_40))));
+            assert(false, 'fix mockito'); // verifyNever(logDebug(any));
+            assert(false, 'fix mockito'); // verifyNever(logWarning(any));
+            assert(false, 'fix mockito'); // verifyNever(logError(any));
         });
 
         test('Only with name, length too long', ()
@@ -75,16 +65,16 @@ void testLog()
 
             /*
             verifyInOrder([
-                logger.logError('##################################################'),
-                logger.logError('# Error: Event name "Test_41_chars_456789012345678901234567890" is too long! Is=41 Max=40'),
+                logError('##################################################'),
+                logError('# Error: Event name "Test_41_chars_456789012345678901234567890" is too long! Is=41 Max=40'),
             ]);
-            verifyNever(logger.logInfo(any));
+            verifyNever(logInfo(any));
             */
 
-            assert(false, 'fix mockito'); // verify(logger.logInfo(argThat(equals('GoogleAnalytics: ' + TEXT_41.substring(0, 40)))));
+            assert(false, 'fix mockito'); // verify(logInfo(argThat(equals('GoogleAnalytics: ' + TEXT_41.substring(0, 40)))));
 
-            assert(false, 'fix mockito'); // verifyNever(logger.logDebug(any));
-            assert(false, 'fix mockito'); // verifyNever(logger.logWarning(any));
+            assert(false, 'fix mockito'); // verifyNever(logDebug(any));
+            assert(false, 'fix mockito'); // verifyNever(logWarning(any));
         });
     });
 }
