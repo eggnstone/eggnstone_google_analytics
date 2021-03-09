@@ -19,9 +19,9 @@ dependencies:
   #  path: ../eggnstone_flutter
 
   # Firebase Analytics (NonWeb)
-  firebase_analytics: ^7.1.0
+  firebase_analytics: ^7.1.1
   # Firebase Analytics (Web)
-  firebase_analytics_web: ^0.2.0
+  firebase_analytics_web: ^0.2.0+1
   # Service locator (included via eggnstone_flutter but "flutter pub publish" warns if not included here)
   get_it: ^6.0.0
 

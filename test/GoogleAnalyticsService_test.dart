@@ -70,8 +70,10 @@ void testLog()
         test('Only with name, length too long', overridePrint(logOnlyWithNameLengthTooLong, ()
         async
         {
-            const String MESSAGE = 'GoogleAnalytics: ' + TEXT_40;
-            const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
+            // ignore: non_constant_identifier_names
+            final String MESSAGE = 'GoogleAnalytics: ' + TEXT_41.substring(0, 40);
+            // ignore: non_constant_identifier_names
+            final String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track(TEXT_41);
