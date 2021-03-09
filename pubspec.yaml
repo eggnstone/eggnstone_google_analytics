@@ -25,6 +25,9 @@ dependencies:
   # Service locator (included via eggnstone_flutter but "flutter pub publish" warns if not included here)
   get_it: ^6.0.0
 
+dependency_overrides:
+  firebase: ^9.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

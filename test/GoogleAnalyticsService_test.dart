@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/eggnstone_google_analytics.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +11,8 @@ const String TEXT_41 = 'Test_41_chars_456789012345678901234567890';
 const String TEXT_100 = 'Test_100_chars_5678901234567890123456789012345678901234567890123456789012345678901234567890123456789';
 const String TEXT_101 = 'Test_101_chars_56789012345678901234567890123456789012345678901234567890123456789012345678901234567891';
 
+const String TIME_REGEX = r'\d{2}:\d{2}:\d{2}';
+
 class MockFirebaseAnalytics extends Mock
     implements FirebaseAnalytics
 {}
@@ -15,6 +20,7 @@ class MockFirebaseAnalytics extends Mock
 void main()
 {
     TestWidgetsFlutterBinding.ensureInitialized();
+    isLoggerEnabled = true;
     testLog();
 }
 
@@ -22,60 +28,57 @@ void testLog()
 {
     group('track with name only', ()
     {
-        test('Only with name, empty name', ()
+        List<String> logOnlyWithNameEmptyName = [];
+        test('Only with name, empty name', overridePrint(logOnlyWithNameEmptyName, ()
         async
         {
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track('');
-            assert(false, 'fix mockito'); // verifyNever(logInfo(any));
-            assert(false, 'fix mockito'); // verifyNever(logDebug(any));
-            assert(false, 'fix mockito'); // verifyNever(logWarning(any));
-            assert(false, 'fix mockito'); // verifyNever(logError(any));
-        });
 
-        test('Only with name, length ok', ()
+            expect(logOnlyWithNameEmptyName.length, 0);
+        }));
+
+        List<String> logOnlyWithNameLengthOk = [];
+        test('Only with name, length ok', overridePrint(logOnlyWithNameLengthOk, ()
         async
         {
+            const String MESSAGE = 'GoogleAnalytics: Test';
+            const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
+
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track('Test');
-            assert(false, 'fix mockito'); // verify(logInfo(argThat(equals('GoogleAnalytics: Test'))));
-            assert(false, 'fix mockito'); // verifyNever(logDebug(any));
-            assert(false, 'fix mockito'); // verifyNever(logWarning(any));
-            assert(false, 'fix mockito'); // verifyNever(logError(any));
-        });
 
-        test('Only with name, length barely ok', ()
+            expect(logOnlyWithNameLengthOk.length, 1);
+            expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + '\$').hasMatch(logOnlyWithNameLengthOk[0]), isTrue);
+        }));
+
+        List<String> logOnlyWithNameLengthBarelyOk = [];
+        test('Only with name, length barely ok', overridePrint(logOnlyWithNameLengthBarelyOk, ()
         async
         {
+            const String MESSAGE = 'GoogleAnalytics: ' + TEXT_40;
+            const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
+
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track(TEXT_40);
-            assert(false, 'fix mockito'); // verify(logInfo(argThat(equals('GoogleAnalytics: ' + TEXT_40))));
-            assert(false, 'fix mockito'); // verifyNever(logDebug(any));
-            assert(false, 'fix mockito'); // verifyNever(logWarning(any));
-            assert(false, 'fix mockito'); // verifyNever(logError(any));
-        });
 
-        test('Only with name, length too long', ()
+            expect(logOnlyWithNameLengthBarelyOk.length, 1);
+            expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + '\$').hasMatch(logOnlyWithNameLengthBarelyOk[0]), isTrue);
+        }));
+
+        List<String> logOnlyWithNameLengthTooLong = [];
+        test('Only with name, length too long', overridePrint(logOnlyWithNameLengthTooLong, ()
         async
         {
+            const String MESSAGE = 'GoogleAnalytics: ' + TEXT_40;
+            const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
+
             IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
             analytics.track(TEXT_41);
 
-            // Behavior changed so that name just gets shortened
-
-            /*
-            verifyInOrder([
-                logError('##################################################'),
-                logError('# Error: Event name "Test_41_chars_456789012345678901234567890" is too long! Is=41 Max=40'),
-            ]);
-            verifyNever(logInfo(any));
-            */
-
-            assert(false, 'fix mockito'); // verify(logInfo(argThat(equals('GoogleAnalytics: ' + TEXT_41.substring(0, 40)))));
-
-            assert(false, 'fix mockito'); // verifyNever(logDebug(any));
-            assert(false, 'fix mockito'); // verifyNever(logWarning(any));
-        });
+            expect(logOnlyWithNameLengthTooLong.length, 1);
+            expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + '\$').hasMatch(logOnlyWithNameLengthTooLong[0]), isTrue);
+        }));
     });
 }
 
@@ -97,3 +100,19 @@ void testLog()
     log(text40, {text40: text101}); // value too long
     log(text41, {text41: text101}); // all too long
 */
+
+overridePrint(List<String> log, testFunction())
+{
+    return ()
+    {
+        var specification = new ZoneSpecification(
+            print: (_, __, ___, String msg)
+            {
+                // Add to log instead of printing to stdout
+                log.add(msg);
+            }
+        );
+
+        return Zone.current.fork(specification: specification).run(testFunction);
+    };
+}
