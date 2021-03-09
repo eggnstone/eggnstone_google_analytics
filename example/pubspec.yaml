@@ -27,9 +27,6 @@ dependencies:
   eggnstone_google_analytics:
     path: ..
 
-dependency_overrides:
-  firebase: ^9.0.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
