@@ -13,4 +13,17 @@ abstract class IGoogleAnalyticsService extends IAnalyticsService
     /// This call is optional, and is generally used by organizations that want to use Analytics in conjunction with BigQuery to associate analytics data for the same user across multiple apps, multiple devices, or multiple analytics providers.
     /// See https://firebase.google.com/docs/analytics/userid
     void setUserId(String value);
+
+    String getOrCreateStackTrace(StackTrace? stackTrace, [int levelsToRemove = 2])
+    {
+        if (stackTrace != null)
+            return stackTrace.toString();
+
+        String s = StackTrace.current.toString();
+        int pos = s.indexOf('#$levelsToRemove      ');
+        if (pos == -1)
+            return s;
+
+        return s.substring(pos);
+    }
 }

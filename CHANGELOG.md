@@ -1,3 +1,7 @@
+## 2.0.0-pre2
+
+* Added stacktrace if not supplied.
+
 ## 2.0.0-pre0
 
 * Replaced Logger Mixin/Service with LogTools.

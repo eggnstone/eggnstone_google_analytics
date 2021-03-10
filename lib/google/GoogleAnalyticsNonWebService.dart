@@ -4,8 +4,7 @@ import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/google/IGoogleAnalyticsService.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 
-class GoogleAnalyticsService
-    implements IGoogleAnalyticsService
+class GoogleAnalyticsService extends IGoogleAnalyticsService
 {
     static const String EVENT_NAME__TUTORIAL_BEGIN = 'tutorial_begin';
     static const String EVENT_NAME__TUTORIAL_COMPLETE = 'tutorial_complete';
@@ -151,32 +150,36 @@ class GoogleAnalyticsService
     }
 
     @override
-    void trackWarningWithException(String source, dynamic e, [dynamic stackTrace])
+    void trackWarningWithException(String source, dynamic e, [StackTrace? stackTrace])
     async
     {
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarningWithException: $source / $e / $stackTrace');
 
         if (_isEnabled)
         {
-            Map<String, dynamic>? params = {'Message': e.toString()};
-            if (stackTrace != null)
-                params[ 'StackTrace'] = stackTrace.toString();
+            Map<String, dynamic> params =
+            {
+                'Message': e.toString(),
+                'StackTrace': getOrCreateStackTrace(stackTrace)
+            };
 
             track('Warning', params);
         }
     }
 
     @override
-    void trackErrorWithException(String source, dynamic e, [dynamic stackTrace])
+    void trackErrorWithException(String source, dynamic e, [StackTrace? stackTrace])
     async
     {
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackErrorWithException: $source / $e / $stackTrace');
 
         if (_isEnabled)
         {
-            Map<String, dynamic>? params = {'Message': e.toString()};
-            if (stackTrace != null)
-                params[ 'StackTrace'] = stackTrace.toString();
+            Map<String, dynamic> params =
+            {
+                'Message': e.toString(),
+                'StackTrace': getOrCreateStackTrace(stackTrace)
+            };
 
             track('Error', params);
         }
