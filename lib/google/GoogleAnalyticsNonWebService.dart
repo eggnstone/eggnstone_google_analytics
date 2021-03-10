@@ -195,11 +195,11 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     }
 
     @override
-    void setUserProperty(String name, String value, {bool force = false})
+    void setUserProperty(String key, String value)
     {
-        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: name=$name value=$value force=$force');
+        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: key=$key value=$value');
 
-        if (_isEnabled || force)
-            _firebaseAnalytics.setUserProperty(name: name, value: value);
+        if (_isEnabled)
+            _firebaseAnalytics.setUserProperty(name: key, value: value);
     }
 }

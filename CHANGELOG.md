@@ -1,3 +1,7 @@
+## 2.0.0-pre3
+
+* Added setUserId/setUserProperty.
+
 ## 2.0.0-pre2
 
 * Added stacktrace if not supplied.
