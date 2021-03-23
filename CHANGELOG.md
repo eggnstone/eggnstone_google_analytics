@@ -1,3 +1,7 @@
+## 2.0.1
+
+- Fixed Analytics for web export.
+
 ## 2.0.0
 
 * Added setUserId/setUserProperty.
