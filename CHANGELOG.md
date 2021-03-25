@@ -1,3 +1,7 @@
+## 3.0.0
+
+* Breaking change: requiring eggnstone_flutter 3.0.0.
+
 ## 2.0.1
 
 - Fixed Analytics for web export.
