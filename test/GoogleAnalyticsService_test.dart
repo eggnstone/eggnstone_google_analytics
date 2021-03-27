@@ -4,7 +4,9 @@ import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/eggnstone_google_analytics.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mockito/annotations.dart';
+
+import 'GoogleAnalyticsService_test.mocks.dart';
 
 const String TEXT_40 = 'Test_40_chars_45678901234567890123456789';
 const String TEXT_41 = 'Test_41_chars_456789012345678901234567890';
@@ -13,10 +15,7 @@ const String TEXT_101 = 'Test_101_chars_5678901234567890123456789012345678901234
 
 const String TIME_REGEX = r'\d{2}:\d{2}:\d{2}';
 
-class MockFirebaseAnalytics extends Mock
-    implements FirebaseAnalytics
-{}
-
+@GenerateMocks(<Type>[FirebaseAnalytics])
 void main()
 {
     TestWidgetsFlutterBinding.ensureInitialized();

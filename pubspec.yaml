@@ -28,5 +28,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # Mocking
+  # Building mocks for Mockito
+  build_runner: any
+  # Mocking/testing
   mockito: any
