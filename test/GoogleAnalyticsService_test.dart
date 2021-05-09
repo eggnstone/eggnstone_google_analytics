@@ -20,6 +20,7 @@ void main()
 {
     TestWidgetsFlutterBinding.ensureInitialized();
     isLoggerEnabled = true;
+    useNewLogger = false;
     testLog();
 }
 

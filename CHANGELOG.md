@@ -1,3 +1,11 @@
+## 3.1.1
+
+* Fixed tests.
+
+## 3.1.0
+
+* Updated dependencies.
+
 ## 3.0.2
 
 * Using null safe Analytics now.
