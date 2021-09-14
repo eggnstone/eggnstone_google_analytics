@@ -1,3 +1,9 @@
+## 3.2.1
+
+* Library cleanup.
+* Updated dependencies.
+* Not logging current screen when name is "_placeHolder_".
+
 ## 3.1.1
 
 * Fixed tests.

@@ -1,8 +1,9 @@
 import 'dart:async';
 
 import 'package:eggnstone_flutter/eggnstone_flutter.dart';
-import 'package:eggnstone_google_analytics/google/IGoogleAnalyticsService.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+
+import 'IGoogleAnalyticsService.dart';
 
 class GoogleAnalyticsService extends IGoogleAnalyticsService
 {
@@ -48,6 +49,9 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     @override
     set currentScreen(String newValue)
     {
+        if (newValue == '_placeHolder_')
+            return;
+
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setCurrentScreen: ' + newValue);
 
         _currentScreen = newValue;
