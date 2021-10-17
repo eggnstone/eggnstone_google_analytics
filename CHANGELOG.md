@@ -1,3 +1,7 @@
+## 3.2.2
+
+* Updated dependencies and lints.
+
 ## 3.2.1
 
 * Library cleanup.
