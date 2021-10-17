@@ -21,8 +21,8 @@ abstract class IGoogleAnalyticsService extends IAnalyticsService
         if (stackTrace != null)
             return stackTrace.toString();
 
-        String s = StackTrace.current.toString();
-        int pos = s.indexOf('#$levelsToRemove      ');
+        final String s = StackTrace.current.toString();
+        final int pos = s.indexOf('#$levelsToRemove      ');
         if (pos == -1)
             return s;
 

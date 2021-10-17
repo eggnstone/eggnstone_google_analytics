@@ -4,13 +4,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-void main()
+Future<void> main()
 async
 {
+    // ignore: prefer_const_declarations
     final bool useLogger = true;
     // Use the following to only log in debug builds:
     //final bool useLogger = DartTools.isDebugBuild();
 
+    // ignore: prefer_const_declarations
     final bool useAnalytics = true;
     // Use the following to only use analytics in release builds:
     //final bool useAnalytics = DartTools.isReleaseBuild();
@@ -23,8 +25,11 @@ async
     }
     on Exception catch (e)
     {
+        // ignore: avoid_print
         print(e);
+        // ignore: avoid_print
         print('Download google-services.json from Firebase to android/app!');
+        // ignore: avoid_print
         print('Download GoogleService-Info.plist from Firebase to ios/Runner!');
         return;
     }
@@ -35,15 +40,18 @@ async
     GetIt.instance.registerSingleton<IAnalyticsService>(analytics);
     analytics.track('AppStart', <String, dynamic>{'Version': '0.0.1'});
 
-    runApp(App());
+    runApp(const App());
 }
 
 class App extends StatelessWidget
 {
+    const App({Key key}) : super(key: key);
+
     @override
     Widget build(BuildContext context)
+    // ignore: prefer_expression_function_bodies
     {
-        return MaterialApp(
+        return const MaterialApp(
             title: 'eggnstone_google_analytics Demo',
             home: HomePage()
         );
@@ -52,9 +60,10 @@ class App extends StatelessWidget
 
 class HomePage extends StatefulWidget
 {
-    HomePage({Key key}) : super(key: key);
+    const HomePage({Key key}) : super(key: key);
 
     @override
+    // ignore: library_private_types_in_public_api
     _HomePageState createState()
     => _HomePageState();
 }
@@ -76,14 +85,15 @@ class _HomePageState extends State<HomePage>
 
     @override
     Widget build(BuildContext context)
+    // ignore: prefer_expression_function_bodies
     {
         return Scaffold(
-            appBar: AppBar(title: Text('eggnstone_google_analytics Demo')),
+            appBar: AppBar(title: const Text('eggnstone_google_analytics Demo')),
             body: Center(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                        Text('You have pushed the button this many times:'),
+                        const Text('You have pushed the button this many times:'),
                         Text('$_counter')
                     ]
                 )
@@ -91,7 +101,7 @@ class _HomePageState extends State<HomePage>
             floatingActionButton: FloatingActionButton(
                 onPressed: _incrementCounter,
                 tooltip: 'Increment',
-                child: Icon(Icons.add)
+                child: const Icon(Icons.add)
             )
         );
     }

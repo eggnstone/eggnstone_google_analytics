@@ -28,59 +28,73 @@ void testLog()
 {
     group('track with name only', ()
     {
-        List<String> logOnlyWithNameEmptyName = [];
-        test('Only with name, empty name', overridePrint(logOnlyWithNameEmptyName, ()
-        async
-        {
-            IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
-            analytics.track('');
+        final List<String> logOnlyWithNameEmptyName = <String>[];
+        test('Only with name, empty name', ()
+        =>
+            overridePrint(logOnlyWithNameEmptyName, ()
+            async
+            {
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
+                analytics.track('');
 
-            expect(logOnlyWithNameEmptyName.length, 0);
-        }));
+                expect(logOnlyWithNameEmptyName.length, 0);
+            }));
 
-        List<String> logOnlyWithNameLengthOk = [];
-        test('Only with name, length ok', overridePrint(logOnlyWithNameLengthOk, ()
-        async
-        {
-            const String MESSAGE = 'GoogleAnalytics: Test';
-            const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
+        final List<String> logOnlyWithNameLengthOk = <String>[];
+        test('Only with name, length ok', ()
+        =>
+            overridePrint(logOnlyWithNameLengthOk, ()
+            async
+            {
+                const String MESSAGE = 'GoogleAnalytics: Test';
+                // ignore: prefer_interpolation_to_compose_strings
+                const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-            IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
-            analytics.track('Test');
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
+                analytics.track('Test');
 
-            expect(logOnlyWithNameLengthOk.length, 1);
-            expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + '\$').hasMatch(logOnlyWithNameLengthOk[0]), isTrue);
-        }));
+                expect(logOnlyWithNameLengthOk.length, 1);
+                // ignore: prefer_interpolation_to_compose_strings
+                expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + r'$').hasMatch(logOnlyWithNameLengthOk[0]), isTrue);
+            }));
 
-        List<String> logOnlyWithNameLengthBarelyOk = [];
-        test('Only with name, length barely ok', overridePrint(logOnlyWithNameLengthBarelyOk, ()
-        async
-        {
-            const String MESSAGE = 'GoogleAnalytics: ' + TEXT_40;
-            const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
+        final List<String> logOnlyWithNameLengthBarelyOk = <String>[];
+        test('Only with name, length barely ok', ()
+        =>
+            overridePrint(logOnlyWithNameLengthBarelyOk, ()
+            async
+            {
+                // ignore: prefer_interpolation_to_compose_strings
+                const String MESSAGE = 'GoogleAnalytics: ' + TEXT_40;
+                // ignore: prefer_interpolation_to_compose_strings
+                const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-            IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
-            analytics.track(TEXT_40);
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
+                analytics.track(TEXT_40);
 
-            expect(logOnlyWithNameLengthBarelyOk.length, 1);
-            expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + '\$').hasMatch(logOnlyWithNameLengthBarelyOk[0]), isTrue);
-        }));
+                expect(logOnlyWithNameLengthBarelyOk.length, 1);
+                // ignore: prefer_interpolation_to_compose_strings
+                expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + r'$').hasMatch(logOnlyWithNameLengthBarelyOk[0]), isTrue);
+            }));
 
-        List<String> logOnlyWithNameLengthTooLong = [];
-        test('Only with name, length too long', overridePrint(logOnlyWithNameLengthTooLong, ()
-        async
-        {
-            // ignore: non_constant_identifier_names
-            final String MESSAGE = 'GoogleAnalytics: ' + TEXT_41.substring(0, 40);
-            // ignore: non_constant_identifier_names
-            final String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
+        final List<String> logOnlyWithNameLengthTooLong = <String>[];
+        test('Only with name, length too long', ()
+        =>
+            overridePrint(logOnlyWithNameLengthTooLong, ()
+            async
+            {
+                // ignore: non_constant_identifier_names, prefer_interpolation_to_compose_strings
+                final String MESSAGE = 'GoogleAnalytics: ' + TEXT_41.substring(0, 40);
+                // ignore: non_constant_identifier_names, prefer_interpolation_to_compose_strings
+                final String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-            IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
-            analytics.track(TEXT_41);
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
+                analytics.track(TEXT_41);
 
-            expect(logOnlyWithNameLengthTooLong.length, 1);
-            expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + '\$').hasMatch(logOnlyWithNameLengthTooLong[0]), isTrue);
-        }));
+                expect(logOnlyWithNameLengthTooLong.length, 1);
+                // ignore: prefer_interpolation_to_compose_strings
+                expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + r'$').hasMatch(logOnlyWithNameLengthTooLong[0]), isTrue);
+            }));
     });
 }
 
@@ -103,11 +117,12 @@ void testLog()
     log(text41, {text41: text101}); // all too long
 */
 
-overridePrint(List<String> log, testFunction())
+dynamic overridePrint(List<String> log, Function() testFunction)
+// ignore: prefer_expression_function_bodies
 {
     return ()
     {
-        var specification = new ZoneSpecification(
+        final ZoneSpecification specification = ZoneSpecification(
             print: (_, __, ___, String msg)
             {
                 // Add to log instead of printing to stdout
@@ -115,6 +130,6 @@ overridePrint(List<String> log, testFunction())
             }
         );
 
-        return Zone.current.fork(specification: specification).run(testFunction);
+        return Zone.current.fork(specification: specification).run<void>(testFunction);
     };
 }

@@ -16,18 +16,20 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     final FirebaseAnalytics _firebaseAnalytics;
 
     bool _isEnabled;
-    String _currentScreen = "";
+    String _currentScreen = '';
 
     GoogleAnalyticsService._internal(this._firebaseAnalytics, this._isEnabled);
 
+    // ignore: avoid_positional_boolean_parameters
     static Future<IGoogleAnalyticsService> create(bool startEnabled)
     => GoogleAnalyticsService.createMockable(FirebaseAnalytics(), startEnabled);
 
+    // ignore: avoid_positional_boolean_parameters
     static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalytics firebaseAnalytics, bool startEnabled)
     async
     {
-        var instance = GoogleAnalyticsService._internal(firebaseAnalytics, startEnabled);
-        instance._firebaseAnalytics.setAnalyticsCollectionEnabled(startEnabled);
+        final GoogleAnalyticsService instance = GoogleAnalyticsService._internal(firebaseAnalytics, startEnabled);
+        await instance._firebaseAnalytics.setAnalyticsCollectionEnabled(startEnabled);
         return instance;
     }
 
@@ -52,6 +54,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         if (newValue == '_placeHolder_')
             return;
 
+        // ignore: prefer_interpolation_to_compose_strings
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setCurrentScreen: ' + newValue);
 
         _currentScreen = newValue;
@@ -61,7 +64,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     }
 
     @override
-    void track(String name, [Map<String, dynamic>? params])
+    Future<void> track(String name, [Map<String, dynamic>? params])
     async
     {
         if (name.isEmpty)
@@ -69,17 +72,18 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
 
         // Check limits (https://support.google.com/firebase/answer/9237506?hl=en)
 
-        if (name.length > GoogleAnalyticsService.MAX_EVENT_NAME_LENGTH)
-            name = name.substring(0, GoogleAnalyticsService.MAX_EVENT_NAME_LENGTH);
+        String safeName = name;
+        if (safeName.length > GoogleAnalyticsService.MAX_EVENT_NAME_LENGTH)
+            safeName = safeName.substring(0, GoogleAnalyticsService.MAX_EVENT_NAME_LENGTH);
 
         Map<String, dynamic>? safeParams;
         if (params != null)
         {
-            safeParams = {};
+            safeParams = <String, dynamic>{};
 
             for (String key in params.keys)
             {
-                Object? value = params[key];
+                final Object? value = params[key];
                 if (value == null)
                     continue;
 
@@ -99,99 +103,104 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
             }
         }
 
-        String s = (_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': ' + name;
+        // ignore: prefer_interpolation_to_compose_strings
+        String s = (_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': ' + safeName;
 
         if (safeParams != null)
-            for (String key in safeParams.keys)
+            for (final String key in safeParams.keys)
+            {
+                // ignore: use_string_buffers
                 s += ' $key=${safeParams[key]}';
+            }
 
         logInfo(s);
 
         if (_isEnabled)
-            _firebaseAnalytics.logEvent(name: name, parameters: safeParams);
+            await _firebaseAnalytics.logEvent(name: safeName, parameters: safeParams);
     }
 
     @override
     void trackAction(String name, String action)
-    => track(name, {'Action': action});
+    => track(name, <String, dynamic>{'Action': action});
 
     @override
     void trackValue(String name, Object value)
-    => track(name, {'Value': value});
+    => track(name, <String, dynamic>{'Value': value});
 
     @override
     void trackActionAndValue(String name, String action, Object value)
-    => track(name, {'Action': action, 'Value': value});
+    => track(name, <String, dynamic>{'Action': action, 'Value': value});
 
     @override
-    Future trackWarning(String message, [Map<String, dynamic>? params])
+    Future<void> trackWarning(String message, [Map<String, dynamic>? params])
     async
     {
+        // ignore: prefer_interpolation_to_compose_strings
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarning: $message / $params');
 
-        if (params == null)
-            params = {};
-
+        params ??= <String, dynamic>{};
         params['Message'] = message;
 
         if (_isEnabled)
-            track('Warning', params);
+            await track('Warning', params);
     }
 
     @override
-    void trackError(String message, [Map<String, dynamic>? params])
+    Future<void> trackError(String message, [Map<String, dynamic>? params])
     async
     {
+        // ignore: prefer_interpolation_to_compose_strings
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackError: $message / $params');
 
-        if (params == null)
-            params = {};
-
+        params ??= <String, dynamic>{};
         params['Message'] = message;
 
         if (_isEnabled)
-            track('Error', params);
+            await track('Error', params);
     }
 
     @override
-    void trackWarningWithException(String source, dynamic e, [StackTrace? stackTrace])
+    Future<void> trackWarningWithException(String source, dynamic e, [StackTrace? stackTrace])
     async
     {
+        // ignore: prefer_interpolation_to_compose_strings
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarningWithException: $source / $e / $stackTrace');
 
         if (_isEnabled)
         {
-            Map<String, dynamic> params =
-            {
+            final Map<String, dynamic> params =
+            <String, dynamic>{
                 'Message': e.toString(),
                 'StackTrace': getOrCreateStackTrace(stackTrace)
             };
 
-            track('Warning', params);
+            await track('Warning', params);
         }
     }
 
     @override
-    void trackErrorWithException(String source, dynamic e, [StackTrace? stackTrace])
+    Future<void> trackErrorWithException(String source, dynamic e, [StackTrace? stackTrace])
     async
     {
+        // ignore: prefer_interpolation_to_compose_strings
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackErrorWithException: $source / $e / $stackTrace');
 
         if (_isEnabled)
         {
-            Map<String, dynamic> params =
-            {
+            final Map<String, dynamic> params =
+            <String, dynamic>{
                 'Message': e.toString(),
                 'StackTrace': getOrCreateStackTrace(stackTrace)
             };
 
-            track('Error', params);
+            await track('Error', params);
         }
     }
 
     @override
     void setUserId(String value)
     {
+        // ignore: prefer_interpolation_to_compose_strings
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $value');
 
         if (_isEnabled)
@@ -201,6 +210,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     @override
     void setUserProperty(String key, String value)
     {
+        // ignore: prefer_interpolation_to_compose_strings
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: key=$key value=$value');
 
         if (_isEnabled)
