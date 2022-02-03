@@ -73,6 +73,7 @@ build/
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+!eggnstone_google_analytics.iml
 
 # As per https://dart.dev/guides/libraries/private-files#packages this library should ignore and remove the pubspec.lock file.
 /pubspec.lock

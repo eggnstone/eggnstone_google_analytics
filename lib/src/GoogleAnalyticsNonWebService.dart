@@ -20,10 +20,12 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
 
     GoogleAnalyticsService._internal(this._firebaseAnalytics, this._isEnabled);
 
+    /// @param startEnabled The state the service should start with.
     // ignore: avoid_positional_boolean_parameters
     static Future<IGoogleAnalyticsService> create(bool startEnabled)
-    => GoogleAnalyticsService.createMockable(FirebaseAnalytics(), startEnabled);
+    => GoogleAnalyticsService.createMockable(FirebaseAnalytics.instance, startEnabled);
 
+    /// For testing purposes only.
     // ignore: avoid_positional_boolean_parameters
     static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalytics firebaseAnalytics, bool startEnabled)
     async
@@ -198,13 +200,13 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     }
 
     @override
-    void setUserId(String value)
+    void setUserId(String id)
     {
         // ignore: prefer_interpolation_to_compose_strings
-        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $value');
+        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $id');
 
         if (_isEnabled)
-            _firebaseAnalytics.setUserId(value);
+            _firebaseAnalytics.setUserId(id: id);
     }
 
     @override

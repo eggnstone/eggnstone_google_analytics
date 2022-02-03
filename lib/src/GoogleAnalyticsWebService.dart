@@ -229,13 +229,13 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     }
 
     @override
-    void setUserId(String value)
+    void setUserId(String id)
     {
         // ignore: prefer_interpolation_to_compose_strings
-        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $value');
+        logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $id');
 
         if (_isEnabled)
-            _firebaseAnalytics.setUserId(value);
+            _firebaseAnalytics.setUserId(id: id);
     }
 
     @override

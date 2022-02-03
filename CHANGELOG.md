@@ -1,3 +1,7 @@
+## 3.3.2
+
+* Updated dependencies.
+
 ## 3.2.2
 
 * Updated dependencies and lints.
