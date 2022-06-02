@@ -1,3 +1,7 @@
+## 3.4.2
+
+* Added isDebugEnabled to IAnalyticsService.
+
 ## 3.4.0
 
 * Updated dependencies.

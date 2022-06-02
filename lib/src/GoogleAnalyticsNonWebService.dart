@@ -18,6 +18,9 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     bool _isEnabled;
     String _currentScreen = '';
 
+    @override
+    bool isDebugEnabled = false;
+
     GoogleAnalyticsService._internal(this._firebaseAnalytics, this._isEnabled);
 
     /// @param startEnabled The state the service should start with.

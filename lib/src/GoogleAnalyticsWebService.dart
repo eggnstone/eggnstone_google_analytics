@@ -18,6 +18,9 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     bool _isEnabled;
     String _currentScreen = '';
 
+    @override
+    bool isDebugEnabled = false;
+
     GoogleAnalyticsService._internal(this._firebaseAnalytics, this._isEnabled);
 
     /// @param startEnabled The state the service should start with.
@@ -125,7 +128,25 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         logInfo(s);
 
         if (_isEnabled)
-            await _firebaseAnalytics.logEvent(name: safeName, parameters: safeParams);
+        {
+            try
+            {
+                if (isDebugEnabled)
+                    logInfo('GoogleAnalyticsService.track: calling _firebaseAnalytics.logEvent ...');
+                await _firebaseAnalytics.logEvent(name: safeName, parameters: safeParams);
+                if (isDebugEnabled)
+                    logInfo('GoogleAnalyticsService.track: called _firebaseAnalytics.logEvent.');
+            }
+            on Exception catch (e)
+            {
+                logError('GoogleAnalyticsService.track/_firebaseAnalytics.logEvent', e);
+            }
+        }
+        else
+        {
+            if (isDebugEnabled)
+                logInfo('GoogleAnalyticsService.track: not calling _firebaseAnalytics.logEvent because not enabled.');
+        }
     }
 
     /// Track an action event.
