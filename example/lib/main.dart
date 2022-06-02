@@ -17,6 +17,9 @@ async
     // Use the following to only use analytics in release builds:
     //final bool useAnalytics = DartTools.isReleaseBuild();
 
+    // ignore: prefer_const_declarations
+    final bool debugAnalytics = true;
+
     WidgetsFlutterBinding.ensureInitialized();
 
     try
@@ -36,7 +39,7 @@ async
 
     isLoggerEnabled = useLogger;
 
-    final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.create(useAnalytics);
+    final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.create(useAnalytics, debugAnalytics);
     GetIt.instance.registerSingleton<IAnalyticsService>(analytics);
     analytics.track('AppStart', <String, dynamic>{'Version': '0.0.1'});
 

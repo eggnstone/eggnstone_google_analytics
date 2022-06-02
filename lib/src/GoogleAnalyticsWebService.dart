@@ -16,24 +16,22 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     final FirebaseAnalyticsWeb _firebaseAnalytics;
 
     bool _isEnabled;
+    bool _isDebugEnabled;
     String _currentScreen = '';
 
-    @override
-    bool isDebugEnabled = false;
-
-    GoogleAnalyticsService._internal(this._firebaseAnalytics, this._isEnabled);
+    GoogleAnalyticsService._internal(this._firebaseAnalytics, this._isEnabled, this._isDebugEnabled);
 
     /// @param startEnabled The state the service should start with.
     // ignore: avoid_positional_boolean_parameters
-    static Future<IGoogleAnalyticsService> create(bool startEnabled)
-    => GoogleAnalyticsService.createMockable(FirebaseAnalyticsWeb(), startEnabled);
+    static Future<IGoogleAnalyticsService> create(bool startEnabled, bool startDebugEnabled)
+    => GoogleAnalyticsService.createMockable(FirebaseAnalyticsWeb(), startEnabled, startDebugEnabled);
 
     /// For testing purposes only.
     // ignore: avoid_positional_boolean_parameters
-    static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalyticsWeb firebaseAnalytics, bool startEnabled)
+    static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalyticsWeb firebaseAnalytics, bool startEnabled, bool startDebugEnabled)
     async
     {
-        final GoogleAnalyticsService instance = GoogleAnalyticsService._internal(firebaseAnalytics, startEnabled);
+        final GoogleAnalyticsService instance = GoogleAnalyticsService._internal(firebaseAnalytics, startEnabled, startDebugEnabled);
         await instance._firebaseAnalytics.setAnalyticsCollectionEnabled(startEnabled);
         return instance;
     }
@@ -49,6 +47,16 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     {
         _isEnabled = newValue;
         _firebaseAnalytics.setAnalyticsCollectionEnabled(newValue);
+    }
+
+    @override
+    bool get isDebugEnabled
+    => _isDebugEnabled;
+
+    @override
+    set isDebugEnabled(bool newValue)
+    {
+        _isDebugEnabled = newValue;
     }
 
     /// The current screen.

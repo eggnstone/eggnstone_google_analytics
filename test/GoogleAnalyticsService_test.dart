@@ -34,7 +34,7 @@ void testLog()
             overridePrint(logOnlyWithNameEmptyName, ()
             async
             {
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true, true);
                 analytics.track('');
 
                 expect(logOnlyWithNameEmptyName.length, 0);
@@ -50,7 +50,7 @@ void testLog()
                 // ignore: prefer_interpolation_to_compose_strings
                 const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true, true);
                 analytics.track('Test');
 
                 expect(logOnlyWithNameLengthOk.length, 1);
@@ -69,7 +69,7 @@ void testLog()
                 // ignore: prefer_interpolation_to_compose_strings
                 const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true, true);
                 analytics.track(TEXT_40);
 
                 expect(logOnlyWithNameLengthBarelyOk.length, 1);
@@ -88,7 +88,7 @@ void testLog()
                 // ignore: non_constant_identifier_names, prefer_interpolation_to_compose_strings
                 final String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true);
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true, true);
                 analytics.track(TEXT_41);
 
                 expect(logOnlyWithNameLengthTooLong.length, 1);
