@@ -1,3 +1,7 @@
+## 3.4.4
+
+* Added trackNumberValue,trackTextValue,trackActionAndNumberValue,trackActionAndTextValue to IAnalyticsService.
+
 ## 3.4.3
 
 * Added startDebugEnabled.

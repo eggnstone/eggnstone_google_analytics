@@ -139,10 +139,10 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         {
             try
             {
-                if (isDebugEnabled)
+                if (_isDebugEnabled)
                     logInfo('GoogleAnalyticsService.track: calling _firebaseAnalytics.logEvent ...');
                 await _firebaseAnalytics.logEvent(name: safeName, parameters: safeParams);
-                if (isDebugEnabled)
+                if (_isDebugEnabled)
                     logInfo('GoogleAnalyticsService.track: called _firebaseAnalytics.logEvent.');
             }
             on Exception catch (e)
@@ -152,7 +152,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         }
         else
         {
-            if (isDebugEnabled)
+            if (_isDebugEnabled)
                 logInfo('GoogleAnalyticsService.track: not calling _firebaseAnalytics.logEvent because not enabled.');
         }
     }
@@ -171,6 +171,14 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     void trackValue(String name, Object value)
     => track(name, <String, dynamic>{'Value': value});
 
+    @override
+    void trackNumberValue(String name, Object numberValue)
+    => track(name, <String, dynamic>{'NumberValue': numberValue});
+
+    @override
+    void trackTextValue(String name, Object textValue)
+    => track(name, <String, dynamic>{'TextValue': textValue});
+
     /// Track an action-and-value event.
     /// @param name The name of the event.
     /// @param action The name of the action.
@@ -178,6 +186,14 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     @override
     void trackActionAndValue(String name, String action, Object value)
     => track(name, <String, dynamic>{'Action': action, 'Value': value});
+
+    @override
+    void trackActionAndNumberValue(String name, String action, Object numberValue)
+    => track(name, <String, dynamic>{'Action': action, 'NumberValue': numberValue});
+
+    @override
+    void trackActionAndTextValue(String name, String action, Object textValue)
+    => track(name, <String, dynamic>{'Action': action, 'TextValue': textValue});
 
     /// Track a warning.
     /// @param message The warning message.
@@ -258,6 +274,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     }
 
     @override
+    // ignore: avoid_renaming_method_parameters
     void setUserId(String id)
     {
         // ignore: prefer_interpolation_to_compose_strings

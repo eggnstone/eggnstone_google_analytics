@@ -141,8 +141,24 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     => track(name, <String, dynamic>{'Value': value});
 
     @override
+    void trackNumberValue(String name, Object numberValue)
+    => track(name, <String, dynamic>{'NumberValue': numberValue});
+
+    @override
+    void trackTextValue(String name, Object textValue)
+    => track(name, <String, dynamic>{'TextValue': textValue});
+
+    @override
     void trackActionAndValue(String name, String action, Object value)
     => track(name, <String, dynamic>{'Action': action, 'Value': value});
+
+    @override
+    void trackActionAndNumberValue(String name, String action, Object numberValue)
+    => track(name, <String, dynamic>{'Action': action, 'NumberValue': numberValue});
+
+    @override
+    void trackActionAndTextValue(String name, String action, Object textValue)
+    => track(name, <String, dynamic>{'Action': action, 'TextValue': textValue});
 
     @override
     Future<void> trackWarning(String message, [Map<String, dynamic>? params])
@@ -211,6 +227,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     }
 
     @override
+    // ignore: avoid_renaming_method_parameters
     void setUserId(String id)
     {
         // ignore: prefer_interpolation_to_compose_strings
