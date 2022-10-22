@@ -20,13 +20,17 @@ dependencies:
   # Firebase Analytics (NonWeb)
   firebase_analytics: ^10.0.2
   # Firebase Analytics (Web)
-  firebase_analytics_web: ^0.5.1+1
+  firebase_analytics_platform_interface: ^3.3.10
   # Service locator (included via eggnstone_flutter but "flutter pub publish" warns if not included here)
+  firebase_analytics_web: ^0.5.1+1
+  # Firebase analytics platform interface (included via firebase_analytics but "flutter pub publish" warns if not included here)
   get_it: ^7.2.0
 
 dev_dependencies:
   # Building mocks for Mockito
   build_runner: ^2.3.2
+  # Firebase core (included via firebase_analytics but "flutter pub publish" warns if not included here)
+  firebase_core: ^2.1.0
   flutter_test:
     sdk: flutter
   # Mocking/testing
