@@ -1,3 +1,7 @@
+## 3.5.0
+
+* Updated dependencies.
+
 ## 3.4.4
 
 * Added trackNumberValue,trackTextValue,trackActionAndNumberValue,trackActionAndTextValue to IAnalyticsService.
