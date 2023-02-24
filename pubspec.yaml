@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Dart tools (included via eggnstone_flutter but "flutter pub publish" warns if not included here)
+  eggnstone_dart: ^1.0.0
   # Flutter tools
   eggnstone_flutter: ^3.6.3
   #eggnstone_flutter:

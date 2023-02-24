@@ -1,3 +1,7 @@
+## 3.6.3
+
+* Using eggnstone_dart for logging now.
+
 ## 3.5.0
 
 * Updated dependencies.

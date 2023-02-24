@@ -46,7 +46,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     set isEnabled(bool newValue)
     {
         _isEnabled = newValue;
-        _firebaseAnalytics.setAnalyticsCollectionEnabled(newValue);
+        unawaited(_firebaseAnalytics.setAnalyticsCollectionEnabled(newValue));
     }
 
     @override
@@ -77,7 +77,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         _currentScreen = newValue;
 
         if (_isEnabled)
-            _firebaseAnalytics.setCurrentScreen(screenName: newValue, screenClassOverride: newValue);
+            unawaited(_firebaseAnalytics.setCurrentScreen(screenName: newValue, screenClassOverride: newValue));
     }
 
     /// Track an event.
@@ -162,22 +162,22 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     /// @param action The name of the action.
     @override
     void trackAction(String name, String action)
-    => track(name, <String, dynamic>{'Action': action});
+    => unawaited(track(name, <String, dynamic>{'Action': action}));
 
     /// Track a value event.
     /// @param name The name of the event.
     /// @param value The name of the value.
     @override
     void trackValue(String name, Object value)
-    => track(name, <String, dynamic>{'Value': value});
+    => unawaited(track(name, <String, dynamic>{'Value': value}));
 
     @override
     void trackNumberValue(String name, Object numberValue)
-    => track(name, <String, dynamic>{'NumberValue': numberValue});
+    => unawaited(track(name, <String, dynamic>{'NumberValue': numberValue}));
 
     @override
     void trackTextValue(String name, Object textValue)
-    => track(name, <String, dynamic>{'TextValue': textValue});
+    => unawaited(track(name, <String, dynamic>{'TextValue': textValue}));
 
     /// Track an action-and-value event.
     /// @param name The name of the event.
@@ -185,15 +185,15 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     /// @param value The name of the value.
     @override
     void trackActionAndValue(String name, String action, Object value)
-    => track(name, <String, dynamic>{'Action': action, 'Value': value});
+    => unawaited(track(name, <String, dynamic>{'Action': action, 'Value': value}));
 
     @override
     void trackActionAndNumberValue(String name, String action, Object numberValue)
-    => track(name, <String, dynamic>{'Action': action, 'NumberValue': numberValue});
+    => unawaited(track(name, <String, dynamic>{'Action': action, 'NumberValue': numberValue}));
 
     @override
     void trackActionAndTextValue(String name, String action, Object textValue)
-    => track(name, <String, dynamic>{'Action': action, 'TextValue': textValue});
+    => unawaited(track(name, <String, dynamic>{'Action': action, 'TextValue': textValue}));
 
     /// Track a warning.
     /// @param message The warning message.
@@ -281,7 +281,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserId: $id');
 
         if (_isEnabled)
-            _firebaseAnalytics.setUserId(id: id);
+            unawaited(_firebaseAnalytics.setUserId(id: id));
     }
 
     @override
@@ -291,6 +291,6 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': setUserProperty: key=$key value=$value');
 
         if (_isEnabled)
-            _firebaseAnalytics.setUserProperty(name: key, value: value);
+            unawaited(_firebaseAnalytics.setUserProperty(name: key, value: value));
     }
 }
