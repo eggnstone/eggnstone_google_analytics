@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:eggnstone_flutter/eggnstone_flutter.dart';
+import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'package:firebase_analytics_web/firebase_analytics_web.dart';
 
 import 'IGoogleAnalyticsService.dart';

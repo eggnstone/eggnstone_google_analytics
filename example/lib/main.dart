@@ -1,3 +1,4 @@
+import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/eggnstone_google_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
