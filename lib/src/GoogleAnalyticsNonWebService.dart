@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:eggnstone_dart/eggnstone_dart.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
 
+import 'DummyFirebaseAnalytics.dart';
+import 'IFirebaseAnalytics.dart';
 import 'IGoogleAnalyticsService.dart';
+import 'RealFirebaseAnalytics.dart';
 
 class GoogleAnalyticsService extends IGoogleAnalyticsService
 {
@@ -13,7 +16,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     static const int MAX_PARAM_NAME_LENGTH = 40;
     static const int MAX_PARAM_VALUE_LENGTH = 100;
 
-    final FirebaseAnalytics _firebaseAnalytics;
+    final IFirebaseAnalytics _firebaseAnalytics;
 
     bool _isEnabled;
     bool _isDebugEnabled;
@@ -24,11 +27,17 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     /// @param startEnabled The state the service should start with.
     // ignore: avoid_positional_boolean_parameters
     static Future<IGoogleAnalyticsService> create(bool startEnabled, bool startDebugEnabled)
-    => GoogleAnalyticsService.createMockable(FirebaseAnalytics.instance, startEnabled, startDebugEnabled);
+    async
+    {
+        if (Platform.isWindows)
+            return GoogleAnalyticsService.createMockable(DummyFirebaseAnalytics(), startEnabled, startDebugEnabled);
+
+        return GoogleAnalyticsService.createMockable(RealFirebaseAnalytics(), startEnabled, startDebugEnabled);
+    }
 
     /// For testing purposes only.
     // ignore: avoid_positional_boolean_parameters
-    static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalytics firebaseAnalytics, bool startEnabled, bool startDebugEnabled)
+    static Future<IGoogleAnalyticsService> createMockable(IFirebaseAnalytics firebaseAnalytics, bool startEnabled, bool startDebugEnabled)
     async
     {
         final GoogleAnalyticsService instance = GoogleAnalyticsService._internal(firebaseAnalytics, startEnabled, startDebugEnabled);

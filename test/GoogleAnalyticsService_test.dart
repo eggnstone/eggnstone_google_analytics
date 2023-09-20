@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'package:eggnstone_google_analytics/eggnstone_google_analytics.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:eggnstone_google_analytics/src/IFirebaseAnalytics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 
@@ -15,7 +15,7 @@ const String TEXT_41 = 'Test_41_chars_456789012345678901234567890';
 
 const String TIME_REGEX = r'\d{2}:\d{2}:\d{2}';
 
-@GenerateMocks(<Type>[FirebaseAnalytics])
+@GenerateMocks(<Type>[IFirebaseAnalytics])
 void main()
 {
     TestWidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +34,7 @@ void testLog()
             overridePrint(logOnlyWithNameEmptyName, ()
             async
             {
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true, true);
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
                 analytics.track('');
 
                 expect(logOnlyWithNameEmptyName.length, 0);
@@ -50,7 +50,7 @@ void testLog()
                 // ignore: prefer_interpolation_to_compose_strings
                 const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true, true);
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
                 analytics.track('Test');
 
                 expect(logOnlyWithNameLengthOk.length, 1);
@@ -69,7 +69,7 @@ void testLog()
                 // ignore: prefer_interpolation_to_compose_strings
                 const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true, true);
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
                 analytics.track(TEXT_40);
 
                 expect(logOnlyWithNameLengthBarelyOk.length, 1);
@@ -88,7 +88,7 @@ void testLog()
                 // ignore: non_constant_identifier_names, prefer_interpolation_to_compose_strings
                 final String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockFirebaseAnalytics(), true, true);
+                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
                 analytics.track(TEXT_41);
 
                 expect(logOnlyWithNameLengthTooLong.length, 1);
