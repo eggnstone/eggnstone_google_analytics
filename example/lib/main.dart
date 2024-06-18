@@ -42,7 +42,7 @@ async
 
     final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.create(useAnalytics, debugAnalytics);
     GetIt.instance.registerSingleton<IAnalyticsService>(analytics);
-    analytics.track('AppStart', <String, dynamic>{'Version': '0.0.1'});
+    analytics.track('AppStart', <String, Object>{'Version': '0.0.1'});
 
     runApp(const App());
 }
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage>
             _counter++;
         });
 
-        analytics.track('ButtonPush', <String, dynamic>{'Counter': _counter});
+        analytics.track('ButtonPush', <String, Object>{'Counter': _counter});
     }
 
     @override

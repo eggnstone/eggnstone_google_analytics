@@ -1,3 +1,7 @@
+## 3.7.2
+
+* Updated dependencies.
+
 ## 3.7.0
 
 * Updated dependencies. Updated min SDK to 3.0.0. Added dummy for Windows.

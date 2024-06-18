@@ -5,7 +5,7 @@ import 'IFirebaseAnalytics.dart';
 class RealFirebaseAnalytics implements IFirebaseAnalytics
 {
     @override
-    Future<void> logEvent({required String name, Map<String, dynamic>? parameters})
+    Future<void> logEvent({required String name, Map<String, Object>? parameters})
     async => FirebaseAnalytics.instance.logEvent(name: name, parameters: parameters);
 
     @override
@@ -13,8 +13,8 @@ class RealFirebaseAnalytics implements IFirebaseAnalytics
     async => FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(startEnabled);
 
     @override
-    Future<void> setCurrentScreen({required String screenName, required String screenClassOverride})
-    async => FirebaseAnalytics.instance.setCurrentScreen(screenName: screenName, screenClassOverride: screenClassOverride);
+    Future<void> setCurrentScreen({required String screenName, required String screenClass})
+    async => FirebaseAnalytics.instance.logScreenView(screenName: screenName, screenClass: screenClass);
 
     @override
     Future<void> setUserId({required String id})

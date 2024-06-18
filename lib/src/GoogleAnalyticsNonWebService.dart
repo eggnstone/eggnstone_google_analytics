@@ -82,11 +82,11 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         _currentScreen = newValue;
 
         if (_isEnabled)
-            unawaited(_firebaseAnalytics.setCurrentScreen(screenName: newValue, screenClassOverride: newValue));
+            unawaited(_firebaseAnalytics.setCurrentScreen(screenName: newValue, screenClass: newValue));
     }
 
     @override
-    Future<void> track(String name, [Map<String, dynamic>? params])
+    Future<void> track(String name, [Map<String, Object>? params])
     async
     {
         if (name.isEmpty)
@@ -98,10 +98,10 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         if (safeName.length > GoogleAnalyticsService.MAX_EVENT_NAME_LENGTH)
             safeName = safeName.substring(0, GoogleAnalyticsService.MAX_EVENT_NAME_LENGTH);
 
-        Map<String, dynamic>? safeParams;
+        Map<String, Object>? safeParams;
         if (params != null)
         {
-            safeParams = <String, dynamic>{};
+            safeParams = <String, Object>{};
 
             for (String key in params.keys)
             {
@@ -143,40 +143,40 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
 
     @override
     void trackAction(String name, String action)
-    => unawaited(track(name, <String, dynamic>{'Action': action}));
+    => unawaited(track(name, <String, Object>{'Action': action}));
 
     @override
     void trackValue(String name, Object value)
-    => unawaited(track(name, <String, dynamic>{'Value': value}));
+    => unawaited(track(name, <String, Object>{'Value': value}));
 
     @override
     void trackNumberValue(String name, Object numberValue)
-    => unawaited(track(name, <String, dynamic>{'NumberValue': numberValue}));
+    => unawaited(track(name, <String, Object>{'NumberValue': numberValue}));
 
     @override
     void trackTextValue(String name, Object textValue)
-    => unawaited(track(name, <String, dynamic>{'TextValue': textValue}));
+    => unawaited(track(name, <String, Object>{'TextValue': textValue}));
 
     @override
     void trackActionAndValue(String name, String action, Object value)
-    => unawaited(track(name, <String, dynamic>{'Action': action, 'Value': value}));
+    => unawaited(track(name, <String, Object>{'Action': action, 'Value': value}));
 
     @override
     void trackActionAndNumberValue(String name, String action, Object numberValue)
-    => unawaited(track(name, <String, dynamic>{'Action': action, 'NumberValue': numberValue}));
+    => unawaited(track(name, <String, Object>{'Action': action, 'NumberValue': numberValue}));
 
     @override
     void trackActionAndTextValue(String name, String action, Object textValue)
-    => unawaited(track(name, <String, dynamic>{'Action': action, 'TextValue': textValue}));
+    => unawaited(track(name, <String, Object>{'Action': action, 'TextValue': textValue}));
 
     @override
-    Future<void> trackWarning(String message, [Map<String, dynamic>? params])
+    Future<void> trackWarning(String message, [Map<String, Object>? params])
     async
     {
         // ignore: prefer_interpolation_to_compose_strings
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackWarning: $message / $params');
 
-        params ??= <String, dynamic>{};
+        params ??= <String, Object>{};
         params['Message'] = message;
 
         if (_isEnabled)
@@ -184,13 +184,13 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     }
 
     @override
-    Future<void> trackError(String message, [Map<String, dynamic>? params])
+    Future<void> trackError(String message, [Map<String, Object>? params])
     async
     {
         // ignore: prefer_interpolation_to_compose_strings
         logInfo((_isEnabled ? 'GoogleAnalytics' : 'Disabled-GoogleAnalytics') + ': trackError: $message / $params');
 
-        params ??= <String, dynamic>{};
+        params ??= <String, Object>{};
         params['Message'] = message;
 
         if (_isEnabled)
@@ -206,8 +206,8 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
 
         if (_isEnabled)
         {
-            final Map<String, dynamic> params =
-            <String, dynamic>{
+            final Map<String, Object> params =
+            <String, Object>{
                 'Message': e.toString(),
                 'StackTrace': getOrCreateStackTrace(stackTrace)
             };
@@ -225,8 +225,8 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
 
         if (_isEnabled)
         {
-            final Map<String, dynamic> params =
-            <String, dynamic>{
+            final Map<String, Object> params =
+            <String, Object>{
                 'Message': e.toString(),
                 'StackTrace': getOrCreateStackTrace(stackTrace)
             };

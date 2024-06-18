@@ -41,7 +41,7 @@ class MockIFirebaseAnalytics extends _i1.Mock
   @override
   _i3.Future<void> setCurrentScreen({
     required String? screenName,
-    required String? screenClassOverride,
+    required String? screenClass,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -49,7 +49,7 @@ class MockIFirebaseAnalytics extends _i1.Mock
           [],
           {
             #screenName: screenName,
-            #screenClassOverride: screenClassOverride,
+            #screenClassOverride: screenClass,
           },
         ),
         returnValue: _i3.Future<void>.value(),
@@ -58,7 +58,7 @@ class MockIFirebaseAnalytics extends _i1.Mock
   @override
   _i3.Future<void> logEvent({
     required String? name,
-    Map<String, dynamic>? parameters,
+    Map<String, Object>? parameters,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
