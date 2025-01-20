@@ -3,7 +3,6 @@ import 'package:eggnstone_flutter/eggnstone_flutter.dart';
 import 'package:eggnstone_google_analytics/eggnstone_google_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 Future<void> main()
 async
@@ -41,7 +40,6 @@ async
     isLoggerEnabled = useLogger;
 
     final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.create(useAnalytics, debugAnalytics);
-    GetIt.instance.registerSingleton<IAnalyticsService>(analytics);
     analytics.track('AppStart', <String, Object>{'Version': '0.0.1'});
 
     runApp(const App());

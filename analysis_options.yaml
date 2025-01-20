@@ -7,15 +7,16 @@ analyzer:
   errors:
     # Otherwise cause the import of all_lint_rules to warn because of some rules conflicts.
     # The conflicts are fixed in this file instead, so we can safely ignore the warning.
+    diagnostic_describe_all_properties: ignore
     document_ignores: ignore
     included_file_warning: ignore
     missing_required_param: error
     missing_return: error
     must_be_immutable: error
+    omit_obvious_local_variable_types: ignore
   exclude: [
     'lib/App.widgetbook.dart',
-    'lib/constants/generated/*.dart',
-    'lib/generated/*.dart',
+    'lib/Constants/Generated/*.dart',
     '**/*.freezed.dart',
     '**/*.g.dart',
     '**/*.gr.dart',
