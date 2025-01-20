@@ -15,9 +15,9 @@ dependencies:
   # Dart tools (included via eggnstone_flutter but "flutter pub publish" warns if not included here)
   eggnstone_dart: ^1.1.1
   # Flutter tools
-  #eggnstone_flutter: ^4.0.0
-  eggnstone_flutter:
-    path: ../eggnstone_flutter
+  eggnstone_flutter: ^4.0.0
+  #eggnstone_flutter:
+  #  path: ../eggnstone_flutter
   # Firebase Analytics (NonWeb)
   firebase_analytics: ^11.4.0
   # Firebase Analytics (Web)
