@@ -27,75 +27,80 @@ void main()
 void testLog()
 {
     group('track with name only', ()
-    {
-        final List<String> logOnlyWithNameEmptyName = <String>[];
-        test('Only with name, empty name', ()
-        =>
-            overridePrint(logOnlyWithNameEmptyName, ()
-            async
-            {
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
-                analytics.track('');
+        {
+            final List<String> logOnlyWithNameEmptyName = <String>[];
+            test('Only with name, empty name', ()
+                => overridePrint(logOnlyWithNameEmptyName, ()
+                    async
+                    {
+                        final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
+                        analytics.track('');
 
-                expect(logOnlyWithNameEmptyName.length, 0);
-            }));
+                        expect(logOnlyWithNameEmptyName.length, 0);
+                    }
+                )
+            );
 
-        final List<String> logOnlyWithNameLengthOk = <String>[];
-        test('Only with name, length ok', ()
-        =>
-            overridePrint(logOnlyWithNameLengthOk, ()
-            async
-            {
-                const String MESSAGE = 'GoogleAnalytics: Test';
-                // ignore: prefer_interpolation_to_compose_strings
-                const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
+            final List<String> logOnlyWithNameLengthOk = <String>[];
+            test('Only with name, length ok', ()
+                => overridePrint(logOnlyWithNameLengthOk, ()
+                    async
+                    {
+                        const String MESSAGE = 'GoogleAnalytics: Test';
+                        // ignore: prefer_interpolation_to_compose_strings
+                        const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
-                analytics.track('Test');
+                        final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
+                        analytics.track('Test');
 
-                expect(logOnlyWithNameLengthOk.length, 1);
-                // ignore: prefer_interpolation_to_compose_strings
-                expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + r'$').hasMatch(logOnlyWithNameLengthOk[0]), isTrue);
-            }));
+                        expect(logOnlyWithNameLengthOk.length, 1);
+                        // ignore: prefer_interpolation_to_compose_strings
+                        expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + r'$').hasMatch(logOnlyWithNameLengthOk[0]), isTrue);
+                    }
+                )
+            );
 
-        final List<String> logOnlyWithNameLengthBarelyOk = <String>[];
-        test('Only with name, length barely ok', ()
-        =>
-            overridePrint(logOnlyWithNameLengthBarelyOk, ()
-            async
-            {
-                // ignore: prefer_interpolation_to_compose_strings
-                const String MESSAGE = 'GoogleAnalytics: ' + TEXT_40;
-                // ignore: prefer_interpolation_to_compose_strings
-                const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
+            final List<String> logOnlyWithNameLengthBarelyOk = <String>[];
+            test('Only with name, length barely ok', ()
+                => overridePrint(logOnlyWithNameLengthBarelyOk, ()
+                    async
+                    {
+                        // ignore: prefer_interpolation_to_compose_strings
+                        const String MESSAGE = 'GoogleAnalytics: ' + TEXT_40;
+                        // ignore: prefer_interpolation_to_compose_strings
+                        const String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
-                analytics.track(TEXT_40);
+                        final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
+                        analytics.track(TEXT_40);
 
-                expect(logOnlyWithNameLengthBarelyOk.length, 1);
-                // ignore: prefer_interpolation_to_compose_strings
-                expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + r'$').hasMatch(logOnlyWithNameLengthBarelyOk[0]), isTrue);
-            }));
+                        expect(logOnlyWithNameLengthBarelyOk.length, 1);
+                        // ignore: prefer_interpolation_to_compose_strings
+                        expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + r'$').hasMatch(logOnlyWithNameLengthBarelyOk[0]), isTrue);
+                    }
+                )
+            );
 
-        final List<String> logOnlyWithNameLengthTooLong = <String>[];
-        test('Only with name, length too long', ()
-        =>
-            overridePrint(logOnlyWithNameLengthTooLong, ()
-            async
-            {
-                // ignore: non_constant_identifier_names, prefer_interpolation_to_compose_strings
-                final String MESSAGE = 'GoogleAnalytics: ' + TEXT_41.substring(0, 40);
-                // ignore: non_constant_identifier_names, prefer_interpolation_to_compose_strings
-                final String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
+            final List<String> logOnlyWithNameLengthTooLong = <String>[];
+            test('Only with name, length too long', ()
+                => overridePrint(logOnlyWithNameLengthTooLong, ()
+                    async
+                    {
+                        // ignore: non_constant_identifier_names, prefer_interpolation_to_compose_strings
+                        final String MESSAGE = 'GoogleAnalytics: ' + TEXT_41.substring(0, 40);
+                        // ignore: non_constant_identifier_names, prefer_interpolation_to_compose_strings
+                        final String ANNOTATED_MESSAGE = 'Info:  ' + MESSAGE;
 
-                final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
-                analytics.track(TEXT_41);
+                        final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.createMockable(MockIFirebaseAnalytics(), true, true);
+                        analytics.track(TEXT_41);
 
-                expect(logOnlyWithNameLengthTooLong.length, 1);
-                // ignore: prefer_interpolation_to_compose_strings
-                expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + r'$').hasMatch(logOnlyWithNameLengthTooLong[0]), isTrue);
-            }));
-    });
+                        expect(logOnlyWithNameLengthTooLong.length, 1);
+                        // ignore: prefer_interpolation_to_compose_strings
+                        expect(RegExp('^' + TIME_REGEX + ' ' + ANNOTATED_MESSAGE + r'$').hasMatch(logOnlyWithNameLengthTooLong[0]), isTrue);
+                    }
+                )
+            );
+        }
+    );
 }
 
 /*

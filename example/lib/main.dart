@@ -78,9 +78,10 @@ class _HomePageState extends State<HomePage>
     void _incrementCounter()
     {
         setState(()
-        {
-            _counter++;
-        });
+            {
+                _counter++;
+            }
+        );
 
         analytics.track('ButtonPush', <String, Object>{'Counter': _counter});
     }

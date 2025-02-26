@@ -242,10 +242,11 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         if (_isEnabled)
         {
             final Map<String, Object> params =
-            <String, Object>{
-                'Message': e.toString(),
-                'StackTrace': getOrCreateStackTrace(stackTrace)
-            };
+                <String, Object>
+                {
+                    'Message': e.toString(),
+                    'StackTrace': getOrCreateStackTrace(stackTrace)
+                };
 
             await track('Warning', params);
         }
@@ -264,10 +265,11 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         if (_isEnabled)
         {
             final Map<String, Object> params =
-            <String, Object>{
-                'Message': e.toString(),
-                'StackTrace': getOrCreateStackTrace(stackTrace)
-            };
+                <String, Object>
+                {
+                    'Message': e.toString(),
+                    'StackTrace': getOrCreateStackTrace(stackTrace)
+                };
 
             await track('Error', params);
         }

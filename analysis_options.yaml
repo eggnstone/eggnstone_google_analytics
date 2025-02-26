@@ -20,6 +20,7 @@ analyzer:
     '**/*.freezed.dart',
     '**/*.g.dart',
     '**/*.gr.dart',
+    '**/*.mocks.dart',
     '**/*.pb.dart',
     '**/*.pbenum.dart',
     '**/*.pbjson.dart',
