@@ -176,8 +176,16 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     => unawaited(track(name, <String, Object>{'NumberValue': numberValue}));
 
     @override
-    void trackTextValue(String name, Object textValue)
-    => unawaited(track(name, <String, Object>{'TextValue': textValue}));
+    void trackDoubleValue(String name, double doubleValue)
+    => unawaited(track(name, <String, Object>{'NumberValue': doubleValue}));
+
+    @override
+    void trackIntValue(String name, int intValue)
+    => unawaited(track(name, <String, Object>{'NumberValue': intValue}));
+
+    @override
+    void trackTextValue(String name, String textValue)
+    => unawaited(track(name, <String, String>{'TextValue': textValue}));
 
     /// Track an action-and-value event.
     /// @param name The name of the event.
@@ -192,8 +200,16 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     => unawaited(track(name, <String, Object>{'Action': action, 'NumberValue': numberValue}));
 
     @override
-    void trackActionAndTextValue(String name, String action, Object textValue)
-    => unawaited(track(name, <String, Object>{'Action': action, 'TextValue': textValue}));
+    void trackActionAndDoubleValue(String name, String action, double doubleValue)
+    => unawaited(track(name, <String, Object>{'Action': action, 'NumberValue': doubleValue}));
+
+    @override
+    void trackActionAndIntValue(String name, String action, int intValue)
+    => unawaited(track(name, <String, Object>{'Action': action, 'NumberValue': intValue}));
+
+    @override
+    void trackActionAndTextValue(String name, String action, String textValue)
+    => unawaited(track(name, <String, String>{'Action': action, 'TextValue': textValue}));
 
     /// Track a warning.
     /// @param message The warning message.

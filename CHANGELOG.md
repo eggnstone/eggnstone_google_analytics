@@ -1,3 +1,7 @@
+## 4.3.0
+
+* Deprecated trackNumberValue and trackActionAndNumberValue.
+
 ## 4.2.0
 
 * Using freezed 3.0.0 now.
