@@ -1,3 +1,7 @@
+## 4.3.2
+
+* Fixed tracking of non-trivial values.
+
 ## 4.3.0
 
 * Deprecated trackNumberValue and trackActionAndNumberValue.

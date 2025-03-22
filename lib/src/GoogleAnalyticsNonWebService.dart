@@ -112,16 +112,11 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
                 if (key.length > GoogleAnalyticsService.MAX_PARAM_NAME_LENGTH)
                     key = key.substring(0, GoogleAnalyticsService.MAX_PARAM_NAME_LENGTH);
 
-                if (value is String)
-                {
-                    String valueString = value;
-                    if (valueString.length > GoogleAnalyticsService.MAX_PARAM_VALUE_LENGTH)
-                        valueString = valueString.substring(0, GoogleAnalyticsService.MAX_PARAM_VALUE_LENGTH);
+                String valueString = value is String ? value : value.toString();
+                if (valueString.length > GoogleAnalyticsService.MAX_PARAM_VALUE_LENGTH)
+                    valueString = valueString.substring(0, GoogleAnalyticsService.MAX_PARAM_VALUE_LENGTH);
 
-                    safeParams[key] = valueString;
-                }
-                else
-                    safeParams[key] = value;
+                safeParams[key] = valueString;
             }
         }
 
