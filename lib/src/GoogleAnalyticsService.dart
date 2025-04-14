@@ -1,9 +1,13 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:eggnstone_dart/eggnstone_dart.dart';
-import 'package:firebase_analytics_web/firebase_analytics_web.dart';
+import 'package:flutter/foundation.dart';
 
+import 'DummyFirebaseAnalytics.dart';
+import 'IFirebaseAnalytics.dart';
 import 'IGoogleAnalyticsService.dart';
+import 'RealFirebaseAnalytics.dart';
 
 class GoogleAnalyticsService extends IGoogleAnalyticsService
 {
@@ -13,7 +17,7 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     static const int MAX_PARAM_NAME_LENGTH = 40;
     static const int MAX_PARAM_VALUE_LENGTH = 100;
 
-    final FirebaseAnalyticsWeb _firebaseAnalytics;
+    final IFirebaseAnalytics _firebaseAnalytics;
 
     bool _isEnabled;
     bool _isDebugEnabled;
@@ -24,11 +28,19 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     /// @param startEnabled The state the service should start with.
     // ignore: avoid_positional_boolean_parameters
     static Future<IGoogleAnalyticsService> create(bool startEnabled, bool startDebugEnabled)
-    => GoogleAnalyticsService.createMockable(FirebaseAnalyticsWeb(), startEnabled, startDebugEnabled);
+    async
+    {
+        // firebase_analytics supports Android, iOS, macOS, and Web.
+
+        if (kIsWeb || Platform.isAndroid || Platform.isIOS || Platform.isMacOS)
+            return GoogleAnalyticsService.createMockable(RealFirebaseAnalytics(), startEnabled, startDebugEnabled);
+
+        return GoogleAnalyticsService.createMockable(DummyFirebaseAnalytics(), startEnabled, startDebugEnabled);
+    }
 
     /// For testing purposes only.
     // ignore: avoid_positional_boolean_parameters
-    static Future<IGoogleAnalyticsService> createMockable(FirebaseAnalyticsWeb firebaseAnalytics, bool startEnabled, bool startDebugEnabled)
+    static Future<IGoogleAnalyticsService> createMockable(IFirebaseAnalytics firebaseAnalytics, bool startEnabled, bool startDebugEnabled)
     async
     {
         final GoogleAnalyticsService instance = GoogleAnalyticsService._internal(firebaseAnalytics, startEnabled, startDebugEnabled);
@@ -36,12 +48,10 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         return instance;
     }
 
-    /// The state of the service (if it reports to Google Analytics or not).
     @override
     bool get isEnabled
     => _isEnabled;
 
-    /// The state of the service (if it reports to Google Analytics or not).
     @override
     set isEnabled(bool newValue)
     {
@@ -59,12 +69,10 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         _isDebugEnabled = newValue;
     }
 
-    /// The current screen.
     @override
     String get currentScreen
     => _currentScreen;
 
-    /// The current screen.
     @override
     set currentScreen(String newValue)
     {
@@ -77,12 +85,9 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         _currentScreen = newValue;
 
         if (_isEnabled)
-            unawaited(_firebaseAnalytics.setCurrentScreen(screenName: newValue, screenClassOverride: newValue));
+            unawaited(_firebaseAnalytics.setCurrentScreen(screenName: newValue, screenClass: newValue));
     }
 
-    /// Track an event.
-    /// @param name The name of the event.
-    /// @param params The optional parameters.
     @override
     Future<void> track(String name, [Map<String, Object>? params])
     async
@@ -110,16 +115,11 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
                 if (key.length > GoogleAnalyticsService.MAX_PARAM_NAME_LENGTH)
                     key = key.substring(0, GoogleAnalyticsService.MAX_PARAM_NAME_LENGTH);
 
-                if (value is String)
-                {
-                    String valueString = value;
-                    if (valueString.length > GoogleAnalyticsService.MAX_PARAM_VALUE_LENGTH)
-                        valueString = valueString.substring(0, GoogleAnalyticsService.MAX_PARAM_VALUE_LENGTH);
+                String valueString = value is String ? value : value.toString();
+                if (valueString.length > GoogleAnalyticsService.MAX_PARAM_VALUE_LENGTH)
+                    valueString = valueString.substring(0, GoogleAnalyticsService.MAX_PARAM_VALUE_LENGTH);
 
-                    safeParams[key] = valueString;
-                }
-                else
-                    safeParams[key] = value;
+                safeParams[key] = valueString;
             }
         }
 
@@ -136,37 +136,13 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         logInfo(s);
 
         if (_isEnabled)
-        {
-            try
-            {
-                if (_isDebugEnabled)
-                    logInfo('GoogleAnalyticsService.track: calling _firebaseAnalytics.logEvent ...');
-                await _firebaseAnalytics.logEvent(name: safeName, parameters: safeParams);
-                if (_isDebugEnabled)
-                    logInfo('GoogleAnalyticsService.track: called _firebaseAnalytics.logEvent.');
-            }
-            on Exception catch (e)
-            {
-                logError('GoogleAnalyticsService.track/_firebaseAnalytics.logEvent', e);
-            }
-        }
-        else
-        {
-            if (_isDebugEnabled)
-                logInfo('GoogleAnalyticsService.track: not calling _firebaseAnalytics.logEvent because not enabled.');
-        }
+            await _firebaseAnalytics.logEvent(name: safeName, parameters: safeParams);
     }
 
-    /// Track an action event.
-    /// @param name The name of the event.
-    /// @param action The name of the action.
     @override
     void trackAction(String name, String action)
     => unawaited(track(name, <String, Object>{'Action': action}));
 
-    /// Track a value event.
-    /// @param name The name of the event.
-    /// @param value The name of the value.
     @override
     void trackValue(String name, Object value)
     => unawaited(track(name, <String, Object>{'Value': value}));
@@ -187,10 +163,6 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     void trackTextValue(String name, String textValue)
     => unawaited(track(name, <String, String>{'TextValue': textValue}));
 
-    /// Track an action-and-value event.
-    /// @param name The name of the event.
-    /// @param action The name of the action.
-    /// @param value The name of the value.
     @override
     void trackActionAndValue(String name, String action, Object value)
     => unawaited(track(name, <String, Object>{'Action': action, 'Value': value}));
@@ -211,9 +183,6 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     void trackActionAndTextValue(String name, String action, String textValue)
     => unawaited(track(name, <String, String>{'Action': action, 'TextValue': textValue}));
 
-    /// Track a warning.
-    /// @param message The warning message.
-    /// @param params The optional parameters.
     @override
     Future<void> trackWarning(String message, [Map<String, Object>? params])
     async
@@ -228,9 +197,6 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
             await track('Warning', params);
     }
 
-    /// Track an error.
-    /// @param message The error message.
-    /// @param params The optional parameters.
     @override
     Future<void> trackError(String message, [Map<String, Object>? params])
     async
@@ -245,9 +211,6 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
             await track('Error', params);
     }
 
-    /// Track a warning with an exception.
-    /// @param source The source of the warning.
-    /// @param stackTrace The stack trace.
     @override
     Future<void> trackWarningWithException(String source, dynamic e, [StackTrace? stackTrace])
     async
@@ -268,9 +231,6 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
         }
     }
 
-    /// Track an error with an exception.
-    /// @param source The source of the error.
-    /// @param stackTrace The stack trace.
     @override
     Future<void> trackErrorWithException(String source, dynamic e, [StackTrace? stackTrace])
     async

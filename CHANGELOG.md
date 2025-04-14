@@ -1,3 +1,7 @@
+## 4.4.0
+
+* Removed unnecessary separate implementation of GoogleAnalyticsService for Web.
+
 ## 4.3.2
 
 * Fixed tracking of non-trivial values.
