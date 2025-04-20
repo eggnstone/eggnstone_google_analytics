@@ -6,21 +6,21 @@ class RealFirebaseAnalytics implements IFirebaseAnalytics
 {
     @override
     Future<void> logEvent({required String name, Map<String, Object>? parameters})
-    async => FirebaseAnalytics.instance.logEvent(name: name, parameters: parameters);
+    => FirebaseAnalytics.instance.logEvent(name: name, parameters: parameters);
 
     @override
     Future<void> setAnalyticsCollectionEnabled(bool startEnabled)
-    async => FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(startEnabled);
+    => FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(startEnabled);
 
     @override
     Future<void> setCurrentScreen({required String screenName, required String screenClass})
-    async => FirebaseAnalytics.instance.logScreenView(screenName: screenName, screenClass: screenClass);
+    => FirebaseAnalytics.instance.logScreenView(screenName: screenName, screenClass: screenClass);
 
     @override
     Future<void> setUserId({required String id})
-    async => FirebaseAnalytics.instance.setUserId(id: id);
+    => FirebaseAnalytics.instance.setUserId(id: id);
 
     @override
     Future<void> setUserProperty({required String name, required String value})
-    async => FirebaseAnalytics.instance.setUserProperty(name: name, value: value);
+    => FirebaseAnalytics.instance.setUserProperty(name: name, value: value);
 }

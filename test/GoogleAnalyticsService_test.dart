@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:eggnstone_dart/eggnstone_dart.dart';
 import 'package:eggnstone_google_analytics/eggnstone_google_analytics.dart';
 import 'package:eggnstone_google_analytics/src/IFirebaseAnalytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 
@@ -18,9 +19,8 @@ const String TIME_REGEX = r'\d{2}:\d{2}:\d{2}';
 @GenerateMocks(<Type>[IFirebaseAnalytics])
 void main()
 {
+    initLog(enabled: true, isWeb: kIsWeb);
     TestWidgetsFlutterBinding.ensureInitialized();
-    isLoggerEnabled = true;
-    useNewLogger = false;
     testLog();
 }
 

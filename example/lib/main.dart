@@ -37,7 +37,7 @@ async
         return;
     }
 
-    isLoggerEnabled = useLogger;
+    enableLog(useLogger);
 
     final IGoogleAnalyticsService analytics = await GoogleAnalyticsService.create(useAnalytics, debugAnalytics);
     analytics.track('AppStart', <String, Object>{'Version': '0.0.1'});

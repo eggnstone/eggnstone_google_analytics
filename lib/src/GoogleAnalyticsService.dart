@@ -28,7 +28,6 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     /// @param startEnabled The state the service should start with.
     // ignore: avoid_positional_boolean_parameters
     static Future<IGoogleAnalyticsService> create(bool startEnabled, bool startDebugEnabled)
-    async
     {
         // firebase_analytics supports Android, iOS, macOS, and Web.
 
