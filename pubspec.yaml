@@ -2,7 +2,7 @@ name: eggnstone_google_analytics
 copyright: 2020-2025 Mark Eggenstein
 description: A wrapper for Google Analytics. Allows to report via Firebase.
 homepage: https://github.com/eggnstone/eggnstone_google_analytics
-version: 4.4.0
+version: 4.4.1
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -12,22 +12,22 @@ dependencies:
   flutter:
     sdk: flutter
 
-  eggnstone_dart: ^1.4.1
+  eggnstone_dart: ^1.4.2
   #eggnstone_dart:
   #  path: ../eggnstone_dart
-  eggnstone_flutter: ^4.3.4
+  eggnstone_flutter: ^4.3.7
   #eggnstone_flutter:
   #  path: ../eggnstone_flutter
-  firebase_analytics: ^11.4.5
-  firebase_analytics_platform_interface: ^4.3.5
-  firebase_analytics_web: ^0.5.10+11
+  firebase_analytics: ^12.0.0
+  #firebase_analytics_platform_interface: ^5.0.0
+  #firebase_analytics_web: ^0.6.0
 
 dev_dependencies:
-  build_runner: ^2.4.15
-  firebase_core: ^3.13.0
+  build_runner: ^2.5.4 # 2.6.0 requires build/source_gen 3.0.0 which is not compatible with riverpod_generator
+  #firebase_core: ^4.0.0
   flutter_test:
     sdk: flutter
-  mockito: ^5.4.5
+  mockito: ^5.5.0
 
 false_secrets:
   - /example/android/app/google-services.json

@@ -1,3 +1,7 @@
+## 4.4.1
+
+* Updated dependencies as far as possible while waiting for riverpod_generator.
+
 ## 4.4.0
 
 * Removed unnecessary separate implementation of GoogleAnalyticsService for Web.
