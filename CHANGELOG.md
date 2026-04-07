@@ -1,3 +1,7 @@
+## 4.4.2
+
+* Updated dependencies.
+
 ## 4.4.1
 
 * Updated dependencies as far as possible while waiting for riverpod_generator.
