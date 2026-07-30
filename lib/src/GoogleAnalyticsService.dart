@@ -146,6 +146,18 @@ class GoogleAnalyticsService extends IGoogleAnalyticsService
     void trackValue(String name, Object value)
     => unawaited(track(name, <String, Object>{'Value': value}));
 
+    /// Sends `NumberValue`, which GA4 can only report as a custom METRIC — and
+    /// a metric is SUMMED across every event that carries it.
+    ///
+    /// That makes the generic name a trap: if one event sends seconds and
+    /// another sends a page count, GA4 adds them together and reports a total
+    /// with no unit. It is also wrong for any value that is not additive — a
+    /// running counter or an ordinal sums to a triangular number (1+2+...+n),
+    /// which inflates fastest exactly when usage grows.
+    ///
+    /// Prefer a purpose-named parameter per measurement (`DurationSeconds`,
+    /// `PageCount`) so each registers as its own metric with its own unit, and
+    /// reach for this only when the value is genuinely additive.
     @override
     void trackNumberValue(String name, Object numberValue)
     => unawaited(track(name, <String, Object>{'NumberValue': numberValue}));
